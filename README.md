@@ -1,5 +1,7 @@
 # KnowIt
 
+[![Build APK](https://github.com/HighviewOne/KnowIt/actions/workflows/build.yml/badge.svg)](https://github.com/HighviewOne/KnowIt/actions/workflows/build.yml)
+
 A text-based Android trivia game built with Kotlin and Jetpack Compose.
 
 ## Gameplay
