@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.KnowIt" parent="android:Theme.Material.NoTitleBar">
+        <item name="android:statusBarColor">#FF0F0E17</item>
+        <item name="android:navigationBarColor">#FF0F0E17</item>
+        <item name="android:windowBackground">@color/knowit_background</item>
+    </style>
+</resources>
