@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KnowIt — Android Trivia Game</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0f0e17;
+      --surface:   #1a1a2e;
+      --card:      #16213e;
+      --primary:   #6c5ce7;
+      --secondary: #a29bfe;
+      --green:     #00b894;
+      --green-lt:  #55efc4;
+      --gold:      #fdcb6e;
+      --red-lt:    #ff7675;
+      --text:      #ffffff;
+      --muted:     rgba(255,255,255,0.55);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      line-height: 1.6;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem;
+      background: radial-gradient(ellipse at 50% 0%, rgba(108,92,231,0.25) 0%, transparent 70%);
+    }
+
+    .badge {
+      display: inline-block;
+      background: rgba(108,92,231,0.2);
+      border: 1px solid rgba(108,92,231,0.4);
+      color: var(--secondary);
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.35rem 1rem;
+      border-radius: 999px;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero h1 {
+      font-size: clamp(3.5rem, 12vw, 7rem);
+      font-weight: 900;
+      color: var(--secondary);
+      letter-spacing: -0.02em;
+      line-height: 1;
+      margin-bottom: 1rem;
+    }
+
+    .hero p {
+      font-size: clamp(1rem, 2.5vw, 1.25rem);
+      color: var(--muted);
+      max-width: 520px;
+      margin-bottom: 2.5rem;
+    }
+
+    .emoji-strip {
+      display: flex;
+      gap: 1rem;
+      font-size: 2rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--primary);
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 700;
+      padding: 0.85rem 2rem;
+      border-radius: 1rem;
+      text-decoration: none;
+      transition: transform 0.15s, box-shadow 0.15s;
+      box-shadow: 0 8px 30px rgba(108,92,231,0.4);
+    }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(108,92,231,0.55); }
+    .btn:active { transform: translateY(0); }
+
+    .btn-outline {
+      background: transparent;
+      border: 2px solid rgba(255,255,255,0.2);
+      color: var(--text);
+      box-shadow: none;
+    }
+    .btn-outline:hover { border-color: var(--secondary); box-shadow: none; }
+
+    .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
+
+    /* ── SECTIONS ── */
+    section { padding: 5rem 1.5rem; max-width: 900px; margin: 0 auto; }
+
+    h2 {
+      font-size: clamp(1.6rem, 4vw, 2.2rem);
+      font-weight: 800;
+      margin-bottom: 2rem;
+      color: var(--text);
+    }
+    h2 span { color: var(--secondary); }
+
+    /* ── FEATURES GRID ── */
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .feature-card {
+      background: var(--card);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 1.25rem;
+      padding: 1.5rem;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .feature-card:hover { border-color: rgba(108,92,231,0.5); transform: translateY(-3px); }
+
+    .feature-icon { font-size: 2rem; margin-bottom: 0.75rem; }
+    .feature-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.4rem; }
+    .feature-card p { font-size: 0.9rem; color: var(--muted); }
+
+    /* ── CATEGORIES ── */
+    .categories {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+
+    .cat-pill {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.6rem 1.2rem;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      border: 1px solid transparent;
+    }
+
+    /* ── SCORING ── */
+    .score-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.95rem;
+    }
+    .score-table th {
+      text-align: left;
+      padding: 0.75rem 1rem;
+      background: var(--card);
+      color: var(--muted);
+      font-weight: 600;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .score-table th:first-child { border-radius: 0.75rem 0 0 0; }
+    .score-table th:last-child  { border-radius: 0 0.75rem 0 0; }
+    .score-table td {
+      padding: 0.75rem 1rem;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .score-table tr:last-child td:first-child { border-radius: 0 0 0 0.75rem; }
+    .score-table tr:last-child td:last-child  { border-radius: 0 0 0.75rem 0; }
+    .score-table tbody tr { background: var(--surface); }
+    .score-table tbody tr:hover { background: var(--card); }
+    .pts { font-weight: 700; color: var(--green-lt); }
+
+    /* ── TECH STACK ── */
+    .stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+    .stack-tag {
+      background: var(--surface);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 0.6rem;
+      padding: 0.5rem 1rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+    .stack-tag span { color: var(--muted); font-weight: 400; margin-left: 0.35rem; }
+
+    /* ── DOWNLOAD ── */
+    .download-box {
+      background: linear-gradient(135deg, rgba(108,92,231,0.2), rgba(0,184,148,0.1));
+      border: 1px solid rgba(108,92,231,0.35);
+      border-radius: 1.5rem;
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+    .download-box h2 { margin-bottom: 0.75rem; }
+    .download-box p { color: var(--muted); margin-bottom: 2rem; max-width: 480px; margin-left: auto; margin-right: auto; }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 2rem 1rem;
+      color: var(--muted);
+      font-size: 0.85rem;
+      border-top: 1px solid rgba(255,255,255,0.07);
+    }
+    footer a { color: var(--secondary); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+
+    /* ── CI BADGE ── */
+    .ci-badge { margin-top: 1.5rem; }
+    .ci-badge img { height: 22px; }
+  </style>
+</head>
+<body>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="badge">Android Trivia Game</div>
+    <h1>KnowIt</h1>
+    <p>20 questions. 5 categories. How much do you actually know?</p>
+
+    <div class="emoji-strip">
+      <span>🔬</span><span>📜</span><span>🌍</span><span>🎬</span><span>💻</span>
+    </div>
+
+    <div class="hero-ctas">
+      <a class="btn" href="https://github.com/HighviewOne/KnowIt/releases" target="_blank">
+        ⬇ Download APK
+      </a>
+      <a class="btn btn-outline" href="https://github.com/HighviewOne/KnowIt" target="_blank">
+        ★ View on GitHub
+      </a>
+    </div>
+
+    <div class="ci-badge">
+      <a href="https://github.com/HighviewOne/KnowIt/actions/workflows/build.yml" target="_blank">
+        <img src="https://github.com/HighviewOne/KnowIt/actions/workflows/build.yml/badge.svg" alt="Build APK" />
+      </a>
+    </div>
+  </div>
+
+  <!-- FEATURES -->
+  <section id="features">
+    <h2>Why <span>KnowIt</span>?</h2>
+    <div class="features">
+      <div class="feature-card">
+        <div class="feature-icon">🎯</div>
+        <h3>Two Question Types</h3>
+        <p>Alternates between Multiple Choice and Type-In questions so you can't just guess.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔥</div>
+        <h3>Streak Bonuses</h3>
+        <p>Get on a roll and earn +5 bonus points for every consecutive correct answer.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">✨</div>
+        <h3>Pure Compose Animations</h3>
+        <p>Card shake, green glow, confetti rain, animated score counter — no third-party libs.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🏆</div>
+        <h3>High Score Tracking</h3>
+        <p>Your best score is saved between sessions. Can you hit the max 295 points?</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📊</div>
+        <h3>Letter Grades</h3>
+        <p>Results screen scores you from A+ to F based on accuracy and total points.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📱</div>
+        <h3>Offline & Lightweight</h3>
+        <p>No internet required, no ads, no account needed. Just open and play.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CATEGORIES -->
+  <section id="categories">
+    <h2>5 <span>Categories</span></h2>
+    <p style="color:var(--muted); margin-bottom: 1.5rem;">
+      10 pairs of questions — 4 per category — covering a broad range of knowledge.
+    </p>
+    <div class="categories">
+      <div class="cat-pill" style="background:rgba(116,185,255,0.12); border-color:rgba(116,185,255,0.3); color:#74b9ff;">🔬 Science</div>
+      <div class="cat-pill" style="background:rgba(253,203,110,0.12); border-color:rgba(253,203,110,0.3); color:#fdcb6e;">📜 History</div>
+      <div class="cat-pill" style="background:rgba(85,239,196,0.12); border-color:rgba(85,239,196,0.3); color:#55efc4;">🌍 Geography</div>
+      <div class="cat-pill" style="background:rgba(255,118,117,0.12); border-color:rgba(255,118,117,0.3); color:#ff7675;">🎬 Pop Culture</div>
+      <div class="cat-pill" style="background:rgba(162,155,254,0.12); border-color:rgba(162,155,254,0.3); color:#a29bfe;">💻 Tech</div>
+    </div>
+  </section>
+
+  <!-- SCORING -->
+  <section id="scoring">
+    <h2>How <span>Scoring</span> Works</h2>
+    <table class="score-table">
+      <thead>
+        <tr><th>Event</th><th>Points</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Correct answer</td><td class="pts">+10 pts</td></tr>
+        <tr><td>Streak bonus (2nd+ consecutive correct)</td><td class="pts">+5 pts extra</td></tr>
+        <tr><td>Wrong answer</td><td style="color:var(--red-lt)">0 pts, streak resets</td></tr>
+        <tr><td>Maximum possible score (20/20 + full streaks)</td><td class="pts">295 pts</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- TECH STACK -->
+  <section id="tech">
+    <h2>Tech <span>Stack</span></h2>
+    <div class="stack">
+      <div class="stack-tag">Kotlin <span>2.0.21</span></div>
+      <div class="stack-tag">Jetpack Compose <span>BOM 2024.11.00</span></div>
+      <div class="stack-tag">Android Gradle Plugin <span>8.6.1</span></div>
+      <div class="stack-tag">Gradle <span>8.9</span></div>
+      <div class="stack-tag">Min SDK <span>API 26</span></div>
+      <div class="stack-tag">Target SDK <span>API 35</span></div>
+      <div class="stack-tag">JVM Target <span>17</span></div>
+    </div>
+  </section>
+
+  <!-- DOWNLOAD -->
+  <section id="download">
+    <div class="download-box">
+      <h2>Ready to <span>play?</span></h2>
+      <p>Download the latest debug APK from GitHub Actions, or clone the repo and build it yourself.</p>
+      <div class="hero-ctas">
+        <a class="btn" href="https://github.com/HighviewOne/KnowIt/actions/workflows/build.yml" target="_blank">
+          ⬇ Get Latest APK
+        </a>
+        <a class="btn btn-outline" href="https://github.com/HighviewOne/KnowIt" target="_blank">
+          ★ GitHub Repo
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>Built with Kotlin &amp; Jetpack Compose ·
+      <a href="https://github.com/HighviewOne/KnowIt" target="_blank">github.com/HighviewOne/KnowIt</a>
+    </p>
+  </footer>
+
+</body>
+</html>
