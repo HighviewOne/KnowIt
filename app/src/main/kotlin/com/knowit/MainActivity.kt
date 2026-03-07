@@ -16,6 +16,7 @@ import com.knowit.ui.screens.ResultScreen
 import com.knowit.ui.theme.KnowItTheme
 import com.knowit.viewmodel.GamePhase
 import com.knowit.viewmodel.GameViewModel
+import com.knowit.viewmodel.GameViewModelFactory
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,7 +25,8 @@ class MainActivity : ComponentActivity() {
         setContent {
             KnowItTheme {
                 Surface(modifier = Modifier.fillMaxSize()) {
-                    val viewModel: GameViewModel = viewModel()
+                    val factory = GameViewModelFactory(this@MainActivity, this@MainActivity)
+                    val viewModel: GameViewModel = viewModel(factory = factory)
                     val state by viewModel.state.collectAsStateWithLifecycle()
 
                     when (state.phase) {

@@ -1,6 +1,9 @@
 package com.knowit.viewmodel
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.knowit.data.HighScoreRepository
 import com.knowit.data.questionBank
 import com.knowit.model.Question
 import com.knowit.model.QuestionType
@@ -8,6 +11,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
 enum class GamePhase {
     HOME,
@@ -36,10 +40,20 @@ data class GameState(
     val lastPointsAwarded: Int = 0
 )
 
-class GameViewModel : ViewModel() {
+class GameViewModel(
+    private val savedStateHandle: SavedStateHandle,
+    private val highScoreRepository: HighScoreRepository
+) : ViewModel() {
 
     private val _state = MutableStateFlow(GameState())
     val state: StateFlow<GameState> = _state.asStateFlow()
+
+    init {
+        viewModelScope.launch {
+            val savedScore = highScoreRepository.getHighScore()
+            _state.update { it.copy(highScore = savedScore) }
+        }
+    }
 
     fun startGame() {
         val questions = questionBank
@@ -132,6 +146,12 @@ class GameViewModel : ViewModel() {
 
         if (nextIndex >= state.questions.size) {
             val newHighScore = maxOf(state.highScore, state.score)
+            
+            // Persist high score
+            viewModelScope.launch {
+                highScoreRepository.saveHighScore(newHighScore)
+            }
+            
             _state.update {
                 it.copy(
                     phase = GamePhase.GAME_OVER,
