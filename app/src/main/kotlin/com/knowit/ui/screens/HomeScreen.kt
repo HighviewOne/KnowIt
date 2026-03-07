@@ -11,6 +11,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -77,7 +79,9 @@ fun HomeScreen(
                 style = MaterialTheme.typography.displayLarge,
                 fontWeight = FontWeight.ExtraBold,
                 color = KnowItSecondary,
-                modifier = Modifier.scale(titleScale)
+                modifier = Modifier
+                    .scale(titleScale)
+                    .semantics { contentDescription = "KnowIt - Test Your Knowledge" }
             )
 
             Text(
@@ -106,7 +110,16 @@ fun HomeScreen(
                     Text(
                         text = emoji,
                         fontSize = 32.sp,
-                        modifier = Modifier.scale(scale)
+                        modifier = Modifier
+                            .scale(scale)
+                            .semantics { contentDescription = when(emoji) {
+                                "🔬" -> "Science"
+                                "📜" -> "History"
+                                "🌍" -> "Geography"
+                                "🎬" -> "Movies"
+                                "💻" -> "Technology"
+                                else -> emoji
+                            }}
                     )
                 }
             }
@@ -117,7 +130,8 @@ fun HomeScreen(
             if (highScore > 0) {
                 Card(
                     colors = CardDefaults.cardColors(containerColor = KnowItCard),
-                    shape = RoundedCornerShape(16.dp)
+                    shape = RoundedCornerShape(16.dp),
+                    modifier = Modifier.semantics { contentDescription = "Best score: $highScore points" }
                 ) {
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,
@@ -148,7 +162,8 @@ fun HomeScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(64.dp)
-                    .scale(buttonScale),
+                    .scale(buttonScale)
+                    .semantics { contentDescription = "Play game" },
                 shape = RoundedCornerShape(20.dp),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = KnowItPrimary

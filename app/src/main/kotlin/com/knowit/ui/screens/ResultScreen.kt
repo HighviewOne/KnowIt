@@ -11,6 +11,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -123,7 +125,8 @@ fun ResultScreen(
                             )
                         ),
                         shape = RoundedCornerShape(60.dp)
-                    ),
+                    )
+                    .semantics { contentDescription = "Grade: $grade" },
                 contentAlignment = Alignment.Center
             ) {
                 Text(
@@ -138,7 +141,8 @@ fun ResultScreen(
             if (isNewHighScore) {
                 Surface(
                     color = AmberPulse.copy(alpha = highScoreAlpha * 0.25f),
-                    shape = RoundedCornerShape(12.dp)
+                    shape = RoundedCornerShape(12.dp),
+                    modifier = Modifier.semantics { contentDescription = "New high score achieved" }
                 ) {
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
@@ -160,7 +164,9 @@ fun ResultScreen(
             Card(
                 colors = CardDefaults.cardColors(containerColor = KnowItCard),
                 shape = RoundedCornerShape(20.dp),
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .semantics { contentDescription = "Score: $animatedScore points, Accuracy: $accuracy%" }
             ) {
                 Column(
                     modifier = Modifier.padding(24.dp),
@@ -269,7 +275,8 @@ fun ResultScreen(
                 onClick = onPlayAgain,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(60.dp),
+                    .height(60.dp)
+                    .semantics { contentDescription = "Play another game" },
                 shape = RoundedCornerShape(20.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = KnowItPrimary),
                 elevation = ButtonDefaults.buttonElevation(defaultElevation = 8.dp)
