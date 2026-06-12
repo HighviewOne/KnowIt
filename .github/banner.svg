@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 280">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="280" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0F0F1A"/>
+      <stop offset="100%" stop-color="#1A0D35"/>
+    </linearGradient>
+    <linearGradient id="icon" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#9B4FE0"/>
+      <stop offset="100%" stop-color="#6B1FAE"/>
+    </linearGradient>
+    <radialGradient id="glow1" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#7B2FBE" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#7B2FBE" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glow2" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#2D9BE8" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#2D9BE8" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="280" fill="url(#bg)" rx="0"/>
+
+  <!-- Decorative glows -->
+  <ellipse cx="100" cy="80" rx="180" ry="130" fill="url(#glow1)"/>
+  <ellipse cx="1100" cy="200" rx="160" ry="120" fill="url(#glow2)"/>
+
+  <!-- Subtle grid lines -->
+  <line x1="0" y1="70" x2="1200" y2="70" stroke="#FFFFFF" stroke-opacity="0.03" stroke-width="1"/>
+  <line x1="0" y1="140" x2="1200" y2="140" stroke="#FFFFFF" stroke-opacity="0.03" stroke-width="1"/>
+  <line x1="0" y1="210" x2="1200" y2="210" stroke="#FFFFFF" stroke-opacity="0.03" stroke-width="1"/>
+
+  <!-- App icon circle -->
+  <circle cx="148" cy="140" r="72" fill="url(#icon)"/>
+  <circle cx="148" cy="140" r="72" fill="none" stroke="#C8A0F0" stroke-width="2" stroke-opacity="0.4"/>
+
+  <!-- K lettermark -->
+  <text x="148" y="170"
+        text-anchor="middle"
+        font-family="'Arial Black', 'Helvetica Neue', Arial, sans-serif"
+        font-weight="900"
+        font-size="74"
+        fill="#FFFFFF">K</text>
+
+  <!-- App title -->
+  <text x="258" y="163"
+        font-family="'Arial Black', 'Helvetica Neue', Arial, sans-serif"
+        font-weight="900"
+        font-size="90"
+        fill="#FFFFFF"
+        letter-spacing="-1">KnowIt</text>
+
+  <!-- Tagline -->
+  <text x="263" y="208"
+        font-family="Arial, Helvetica, sans-serif"
+        font-size="24"
+        fill="#C8A0F0"
+        letter-spacing="0.8">Android Trivia Game  ·  Kotlin  ·  Jetpack Compose</text>
+
+  <!-- Purple accent bar -->
+  <rect x="263" y="224" width="640" height="3" fill="#7B2FBE" rx="2" opacity="0.7"/>
+</svg>

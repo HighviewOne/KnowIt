@@ -1,0 +1,63 @@
+name: Bug Report
+description: Something isn't working as expected
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report a bug! Please fill out the sections below.
+
+  - type: textarea
+    id: description
+    attributes:
+      label: What happened?
+      description: A clear, concise description of the bug.
+      placeholder: "Tapping the Submit button on a type-in question crashes the app."
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: How can we reliably reproduce the issue?
+      placeholder: |
+        1. Open the app
+        2. Start a game
+        3. Reach a Type-In question
+        4. Tap Submit without typing anything
+        5. App crashes
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behaviour
+      placeholder: "The Submit button should remain disabled when the input is blank."
+    validations:
+      required: true
+
+  - type: input
+    id: device
+    attributes:
+      label: Device & Android version
+      placeholder: "Pixel 7, Android 14 (API 34)"
+    validations:
+      required: true
+
+  - type: input
+    id: app_version
+    attributes:
+      label: App version
+      placeholder: "v1.0 (from Releases page or About screen)"
+    validations:
+      required: false
+
+  - type: textarea
+    id: extra
+    attributes:
+      label: Additional context
+      description: Crash logs, screenshots, or any other information that might help.
+    validations:
+      required: false
