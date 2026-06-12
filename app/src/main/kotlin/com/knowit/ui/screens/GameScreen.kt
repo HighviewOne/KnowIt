@@ -49,7 +49,7 @@ fun GameScreen(
     onTypeInSubmit: () -> Unit,
     onNext: () -> Unit
 ) {
-    val currentQuestion = state.questions[state.currentQuestionIndex]
+    val currentQuestion = state.questions.getOrNull(state.currentQuestionIndex) ?: return
     val questionNumber = state.currentQuestionIndex + 1
     val totalQuestions = state.questions.size
 
@@ -336,7 +336,7 @@ fun GameScreen(
                     val currentX = particle.x + particle.speedX * confettiTime
                     val alpha = (1f - elapsedFraction * 1.2f).coerceIn(0f, 1f)
 
-                    if (alpha > 0f && currentY < 1.2f) {
+                    if (alpha > 0f) {
                         val screenX = currentX * size.width
                         val screenY = currentY * size.height
                         rotate(

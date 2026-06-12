@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.sp
 import com.knowit.ui.theme.*
 import com.knowit.viewmodel.GameState
 
-private fun letterGrade(score: Int, maxScore: Int = 295): String {
+private fun letterGrade(score: Int, maxScore: Int): String {
     val pct = score.toFloat() / maxScore.toFloat()
     return when {
         pct >= 0.97f -> "A+"
@@ -49,7 +49,8 @@ fun ResultScreen(
     state: GameState,
     onPlayAgain: () -> Unit
 ) {
-    val grade = letterGrade(state.score)
+    val maxScore = if (state.questions.isEmpty()) 1 else 10 + 15 * (state.questions.size - 1)
+    val grade = letterGrade(state.score, maxScore)
     val accuracy = if (state.questions.isNotEmpty()) {
         (state.correctCount.toFloat() / state.questions.size.toFloat() * 100).toInt()
     } else 0

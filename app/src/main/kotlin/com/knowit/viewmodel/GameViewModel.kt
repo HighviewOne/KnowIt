@@ -84,6 +84,7 @@ class GameViewModel(
     fun submitMultipleChoiceAnswer(option: String) {
         val state = _state.value
         if (state.answerStatus != AnswerStatus.NONE) return
+        if (state.currentQuestionIndex >= state.questions.size) return
 
         val currentQuestion = state.questions[state.currentQuestionIndex]
         val isCorrect = option == currentQuestion.correctAnswer
@@ -112,6 +113,7 @@ class GameViewModel(
         val state = _state.value
         if (state.answerStatus != AnswerStatus.NONE) return
         if (state.typeInText.isBlank()) return
+        if (state.currentQuestionIndex >= state.questions.size) return
 
         val currentQuestion = state.questions[state.currentQuestionIndex]
         val userInput = state.typeInText.trim()
