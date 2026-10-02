@@ -2,15 +2,6 @@ package com.knowit.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-// Primary palette
-val Purple80 = Color(0xFFD0BCFF)
-val PurpleGrey80 = Color(0xFFCCC2DC)
-val Pink80 = Color(0xFFEFB8C8)
-
-val Purple40 = Color(0xFF6650A4)
-val PurpleGrey40 = Color(0xFF625B71)
-val Pink40 = Color(0xFF7D5260)
-
 // App accent colors
 val KnowItPrimary = Color(0xFF6C5CE7)
 val KnowItSecondary = Color(0xFFA29BFE)

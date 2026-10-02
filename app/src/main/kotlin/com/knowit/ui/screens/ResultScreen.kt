@@ -10,6 +10,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -19,6 +20,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.knowit.R
 import com.knowit.model.Scoring
 import com.knowit.ui.theme.*
 import com.knowit.viewmodel.GameState
@@ -90,14 +92,15 @@ fun ResultScreen(
         label = "highScoreAlpha"
     )
 
+    val gradeDescription = stringResource(R.string.result_grade_description, grade)
+    val newHighScoreDescription = stringResource(R.string.result_new_high_score_description)
+    val scoreDescription = stringResource(R.string.result_score_description, state.score, accuracy)
+    val playAgainDescription = stringResource(R.string.result_play_again_description)
+
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(
-                brush = Brush.verticalGradient(
-                    colors = listOf(KnowItBackground, Color(0xFF1A1A2E))
-                )
-            )
+            .screenBackground()
             .safeDrawingPadding(),
         contentAlignment = Alignment.Center
     ) {
@@ -112,7 +115,7 @@ fun ResultScreen(
             Spacer(modifier = Modifier.height(16.dp))
 
             Text(
-                text = "Game Over!",
+                text = stringResource(R.string.result_title),
                 style = MaterialTheme.typography.headlineLarge,
                 fontWeight = FontWeight.ExtraBold,
                 color = Color.White
@@ -132,7 +135,7 @@ fun ResultScreen(
                         ),
                         shape = RoundedCornerShape(60.dp)
                     )
-                    .semantics { contentDescription = "Grade: $grade" },
+                    .semantics { contentDescription = gradeDescription },
                 contentAlignment = Alignment.Center
             ) {
                 Text(
@@ -148,7 +151,7 @@ fun ResultScreen(
                 Surface(
                     color = AmberPulse.copy(alpha = highScoreAlpha * 0.25f),
                     shape = RoundedCornerShape(12.dp),
-                    modifier = Modifier.semantics { contentDescription = "New high score achieved" }
+                    modifier = Modifier.semantics { contentDescription = newHighScoreDescription }
                 ) {
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
@@ -157,7 +160,7 @@ fun ResultScreen(
                     ) {
                         Text(text = "🏆", fontSize = 20.sp)
                         Text(
-                            text = "NEW HIGH SCORE!",
+                            text = stringResource(R.string.result_new_high_score),
                             style = MaterialTheme.typography.titleMedium,
                             fontWeight = FontWeight.ExtraBold,
                             color = AmberPulse.copy(alpha = highScoreAlpha)
@@ -172,7 +175,7 @@ fun ResultScreen(
                 shape = RoundedCornerShape(20.dp),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .semantics { contentDescription = "Score: $animatedScore points, Accuracy: $accuracy%" }
+                    .semantics { contentDescription = scoreDescription }
             ) {
                 Column(
                     modifier = Modifier.padding(24.dp),
@@ -185,12 +188,12 @@ fun ResultScreen(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
-                            text = "Final Score",
+                            text = stringResource(R.string.result_final_score),
                             style = MaterialTheme.typography.bodyLarge,
                             color = Color.White.copy(alpha = 0.7f)
                         )
                         Text(
-                            text = "$animatedScore pts",
+                            text = stringResource(R.string.points, animatedScore),
                             style = MaterialTheme.typography.headlineMedium,
                             fontWeight = FontWeight.ExtraBold,
                             color = KnowItSecondary
@@ -205,12 +208,12 @@ fun ResultScreen(
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         Text(
-                            text = "Correct",
+                            text = stringResource(R.string.result_correct),
                             style = MaterialTheme.typography.bodyLarge,
                             color = Color.White.copy(alpha = 0.7f)
                         )
                         Text(
-                            text = "${state.correctCount} / ${state.questions.size}",
+                            text = stringResource(R.string.result_correct_count, state.correctCount, state.questions.size),
                             style = MaterialTheme.typography.titleMedium,
                             fontWeight = FontWeight.Bold,
                             color = Color.White
@@ -223,12 +226,12 @@ fun ResultScreen(
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         Text(
-                            text = "Accuracy",
+                            text = stringResource(R.string.result_accuracy),
                             style = MaterialTheme.typography.bodyLarge,
                             color = Color.White.copy(alpha = 0.7f)
                         )
                         Text(
-                            text = "$accuracy%",
+                            text = stringResource(R.string.result_accuracy_value, accuracy),
                             style = MaterialTheme.typography.titleMedium,
                             fontWeight = FontWeight.Bold,
                             color = when {
@@ -247,12 +250,12 @@ fun ResultScreen(
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
                             Text(
-                                text = "Best Score",
+                                text = stringResource(R.string.best_score),
                                 style = MaterialTheme.typography.bodyLarge,
                                 color = StreakGold.copy(alpha = 0.8f)
                             )
                             Text(
-                                text = "${state.highScore} pts",
+                                text = stringResource(R.string.points, state.highScore),
                                 style = MaterialTheme.typography.titleMedium,
                                 fontWeight = FontWeight.Bold,
                                 color = StreakGold
@@ -264,13 +267,15 @@ fun ResultScreen(
 
             // Motivational message
             Text(
-                text = when {
-                    accuracy == 100 -> "Perfect score! You're a genius! 🎉"
-                    accuracy >= 80 -> "Excellent work! Almost perfect! 🌟"
-                    accuracy >= 60 -> "Good job! Keep practicing! 💪"
-                    accuracy >= 40 -> "Not bad! Room to improve! 📚"
-                    else -> "Keep studying, you'll get there! 🔥"
-                },
+                text = stringResource(
+                    when {
+                        accuracy == 100 -> R.string.result_message_perfect
+                        accuracy >= 80 -> R.string.result_message_excellent
+                        accuracy >= 60 -> R.string.result_message_good
+                        accuracy >= 40 -> R.string.result_message_ok
+                        else -> R.string.result_message_low
+                    }
+                ),
                 style = MaterialTheme.typography.bodyLarge,
                 color = Color.White.copy(alpha = 0.7f),
                 textAlign = TextAlign.Center
@@ -282,13 +287,13 @@ fun ResultScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(60.dp)
-                    .semantics { contentDescription = "Play another game" },
+                    .semantics { contentDescription = playAgainDescription },
                 shape = RoundedCornerShape(20.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = KnowItPrimary),
                 elevation = ButtonDefaults.buttonElevation(defaultElevation = 8.dp)
             ) {
                 Text(
-                    text = "Play Again  ▶",
+                    text = stringResource(R.string.result_play_again),
                     style = MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.ExtraBold,
                     color = Color.White
