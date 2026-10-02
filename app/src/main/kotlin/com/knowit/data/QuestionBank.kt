@@ -154,9 +154,9 @@ val questionBank: List<Question> = listOf(
         id = 17,
         type = QuestionType.MULTIPLE_CHOICE,
         category = Category.HISTORY,
-        questionText = "Which empire was ruled by Julius Caesar?",
-        correctAnswer = "Roman Empire",
-        options = listOf("Roman Empire", "Greek Empire", "Ottoman Empire", "Byzantine Empire")
+        questionText = "Julius Caesar was dictator of which ancient state?",
+        correctAnswer = "Roman Republic",
+        options = listOf("Roman Republic", "Carthage", "Ptolemaic Egypt", "Macedon")
     ),
     // Pair 9: Geography TypeIn
     Question(
