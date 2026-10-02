@@ -29,7 +29,7 @@ class MainActivity : ComponentActivity() {
             statusBarStyle = SystemBarStyle.dark(Color.TRANSPARENT),
             navigationBarStyle = SystemBarStyle.dark(Color.TRANSPARENT)
         )
-        val factory = GameViewModelFactory(this, applicationContext)
+        val factory = GameViewModelFactory(applicationContext)
         setContent {
             KnowItTheme {
                 Surface(modifier = Modifier.fillMaxSize()) {

@@ -19,6 +19,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.knowit.model.Scoring
 import com.knowit.ui.theme.*
 import com.knowit.viewmodel.GameState
 
@@ -51,7 +52,7 @@ fun ResultScreen(
     state: GameState,
     onPlayAgain: () -> Unit
 ) {
-    val maxScore = if (state.questions.isEmpty()) 1 else 10 + 15 * (state.questions.size - 1)
+    val maxScore = Scoring.maxScore(state.questions.size).coerceAtLeast(1)
     val grade = letterGrade(state.score, maxScore)
     val accuracy = if (state.questions.isNotEmpty()) {
         (state.correctCount.toFloat() / state.questions.size.toFloat() * 100).toInt()

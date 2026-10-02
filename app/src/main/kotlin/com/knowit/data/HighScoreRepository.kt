@@ -1,29 +1,26 @@
 package com.knowit.data
 
 import android.content.Context
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.map
 
 private val Context.dataStore by preferencesDataStore(name = "knowit_prefs")
 
-class HighScoreRepository(context: Context) {
+class HighScoreRepository(private val dataStore: DataStore<Preferences>) {
     // Held by a ViewModel that outlives the Activity, so never keep an Activity context.
-    private val context = context.applicationContext
+    constructor(context: Context) : this(context.applicationContext.dataStore)
 
     companion object {
         private val HIGH_SCORE_KEY = intPreferencesKey("high_score")
     }
 
-    val highScoreFlow: Flow<Int> = context.dataStore.data.map { prefs ->
-        prefs[HIGH_SCORE_KEY] ?: 0
-    }
-
+    /** Stores [score] only if it beats the saved best. */
     suspend fun saveHighScore(score: Int) {
-        context.dataStore.edit { prefs ->
+        dataStore.edit { prefs ->
             val currentHigh = prefs[HIGH_SCORE_KEY] ?: 0
             if (score > currentHigh) {
                 prefs[HIGH_SCORE_KEY] = score
@@ -31,9 +28,5 @@ class HighScoreRepository(context: Context) {
         }
     }
 
-    suspend fun getHighScore(): Int {
-        return context.dataStore.data.map { prefs ->
-            prefs[HIGH_SCORE_KEY] ?: 0
-        }.first()
-    }
+    suspend fun getHighScore(): Int = dataStore.data.first()[HIGH_SCORE_KEY] ?: 0
 }
