@@ -2,6 +2,8 @@ package com.knowit.ui.screens
 
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
@@ -54,7 +56,7 @@ fun ResultScreen(
     val accuracy = if (state.questions.isNotEmpty()) {
         (state.correctCount.toFloat() / state.questions.size.toFloat() * 100).toInt()
     } else 0
-    val isNewHighScore = state.score > 0 && state.score == state.highScore
+    val isNewHighScore = state.isNewHighScore
 
     // Grade bounce entrance
     var gradeVisible by remember { mutableStateOf(false) }
@@ -94,7 +96,8 @@ fun ResultScreen(
                 brush = Brush.verticalGradient(
                     colors = listOf(KnowItBackground, Color(0xFF1A1A2E))
                 )
-            ),
+            )
+            .safeDrawingPadding(),
         contentAlignment = Alignment.Center
     ) {
         Column(
@@ -102,6 +105,7 @@ fun ResultScreen(
             verticalArrangement = Arrangement.spacedBy(20.dp),
             modifier = Modifier
                 .fillMaxWidth()
+                .verticalScroll(rememberScrollState())
                 .padding(24.dp)
         ) {
             Spacer(modifier = Modifier.height(16.dp))

@@ -10,7 +10,10 @@ import kotlinx.coroutines.flow.map
 
 private val Context.dataStore by preferencesDataStore(name = "knowit_prefs")
 
-class HighScoreRepository(private val context: Context) {
+class HighScoreRepository(context: Context) {
+    // Held by a ViewModel that outlives the Activity, so never keep an Activity context.
+    private val context = context.applicationContext
+
     companion object {
         private val HIGH_SCORE_KEY = intPreferencesKey("high_score")
     }
