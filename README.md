@@ -70,14 +70,14 @@ git clone https://github.com/HighviewOne/KnowIt.git
 ```
 
 1. Open the project in **Android Studio Hedgehog** or newer
-2. Click **Sync Now** — Studio generates `gradle-wrapper.jar` automatically
+2. Click **Sync Now**
 3. Run on any API 26+ emulator or physical device
 
 **Physical device:** enable **USB Debugging** in Developer Options, plug in, and select it as the run target.
 
 ### Build from the terminal
 
-After the first Android Studio sync (which generates the Gradle wrapper):
+Requires JDK 17 and the Android SDK (`ANDROID_HOME` or `local.properties`). The Gradle wrapper downloads Gradle 8.9 on first run:
 
 ```bash
 ./gradlew assembleDebug

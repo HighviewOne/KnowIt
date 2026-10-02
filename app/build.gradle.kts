@@ -4,6 +4,16 @@ plugins {
     alias(libs.plugins.kotlin.compose)
 }
 
+// Release CI passes -PappVersionName from the git tag (v1.2.3 -> 1.2.3).
+// versionCode is derived as major*10000 + minor*100 + patch so every release increases it.
+val appVersionName = (findProperty("appVersionName") as String?) ?: "1.0.0"
+val appVersionCode = Regex("""^(\d+)\.(\d+)(?:\.(\d+))?""").find(appVersionName)
+    ?.destructured
+    ?.let { (major, minor, patch) ->
+        major.toInt() * 10000 + minor.toInt() * 100 + (patch.toIntOrNull() ?: 0)
+    }
+    ?: error("appVersionName '$appVersionName' must start with MAJOR.MINOR[.PATCH]")
+
 android {
     namespace = "com.knowit"
     compileSdk = 35
@@ -12,8 +22,8 @@ android {
         applicationId = "com.knowit"
         minSdk = 26
         targetSdk = 35
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = appVersionCode
+        versionName = appVersionName
     }
 
     signingConfigs {
