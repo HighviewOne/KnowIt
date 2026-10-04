@@ -1,12 +1,13 @@
 package com.knowit.viewmodel
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.knowit.data.HighScoreRepository
 import com.knowit.data.questionBank
 import com.knowit.model.Question
 import com.knowit.model.QuestionType
+import com.knowit.model.Scoring
+import com.knowit.model.accepts
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -43,7 +44,6 @@ data class GameState(
 )
 
 class GameViewModel(
-    private val savedStateHandle: SavedStateHandle,
     private val highScoreRepository: HighScoreRepository,
     private val questionSource: List<Question> = questionBank,
     private val random: Random = Random.Default
@@ -95,62 +95,32 @@ class GameViewModel(
         if (question.type == QuestionType.MULTIPLE_CHOICE) question.options.shuffled(random) else emptyList()
 
     fun submitMultipleChoiceAnswer(option: String) {
-        val state = _state.value
-        if (state.answerStatus != AnswerStatus.NONE) return
-        if (state.currentQuestionIndex >= state.questions.size) return
-
-        val currentQuestion = state.questions[state.currentQuestionIndex]
-        val isCorrect = option == currentQuestion.correctAnswer
-
-        val basePoints = if (isCorrect) 10 else 0
-        val bonusPoints = if (isCorrect && state.streak >= 1) 5 else 0
-        val pointsAwarded = basePoints + bonusPoints
-
-        val newStreak = if (isCorrect) state.streak + 1 else 0
-        val newScore = state.score + pointsAwarded
-        val newCorrectCount = if (isCorrect) state.correctCount + 1 else state.correctCount
-
-        _state.update {
-            it.copy(
-                answerStatus = if (isCorrect) AnswerStatus.CORRECT else AnswerStatus.WRONG,
-                score = newScore,
-                streak = newStreak,
-                correctCount = newCorrectCount,
-                selectedOption = option,
-                lastPointsAwarded = pointsAwarded
-            )
-        }
+        val question = currentUnansweredQuestion() ?: return
+        recordAnswer(isCorrect = option == question.correctAnswer, selectedOption = option)
     }
 
     fun submitTypeInAnswer() {
+        if (_state.value.typeInText.isBlank()) return
+        val question = currentUnansweredQuestion() ?: return
+        recordAnswer(isCorrect = question.accepts(_state.value.typeInText), selectedOption = null)
+    }
+
+    private fun currentUnansweredQuestion(): Question? {
         val state = _state.value
-        if (state.answerStatus != AnswerStatus.NONE) return
-        if (state.typeInText.isBlank()) return
-        if (state.currentQuestionIndex >= state.questions.size) return
+        if (state.phase != GamePhase.PLAYING || state.answerStatus != AnswerStatus.NONE) return null
+        return state.questions.getOrNull(state.currentQuestionIndex)
+    }
 
-        val currentQuestion = state.questions[state.currentQuestionIndex]
-        val userInput = state.typeInText.trim()
-
-        val isCorrect = userInput.equals(currentQuestion.correctAnswer, ignoreCase = true) ||
-            currentQuestion.acceptedAnswers.any { accepted ->
-                userInput.equals(accepted, ignoreCase = true)
-            }
-
-        val basePoints = if (isCorrect) 10 else 0
-        val bonusPoints = if (isCorrect && state.streak >= 1) 5 else 0
-        val pointsAwarded = basePoints + bonusPoints
-
-        val newStreak = if (isCorrect) state.streak + 1 else 0
-        val newScore = state.score + pointsAwarded
-        val newCorrectCount = if (isCorrect) state.correctCount + 1 else state.correctCount
-
+    private fun recordAnswer(isCorrect: Boolean, selectedOption: String?) {
         _state.update {
+            val points = Scoring.pointsFor(isCorrect, streakBefore = it.streak)
             it.copy(
                 answerStatus = if (isCorrect) AnswerStatus.CORRECT else AnswerStatus.WRONG,
-                score = newScore,
-                streak = newStreak,
-                correctCount = newCorrectCount,
-                lastPointsAwarded = pointsAwarded
+                score = it.score + points,
+                streak = if (isCorrect) it.streak + 1 else 0,
+                correctCount = if (isCorrect) it.correctCount + 1 else it.correctCount,
+                selectedOption = selectedOption,
+                lastPointsAwarded = points
             )
         }
     }

@@ -1,4 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">KnowIt</string>
+
+    <!-- Categories -->
+    <string name="category_science">Science</string>
+    <string name="category_history">History</string>
+    <string name="category_geography">Geography</string>
+    <string name="category_pop_culture">Pop Culture</string>
+    <string name="category_tech">Tech</string>
+
+    <!-- Shared -->
+    <string name="points">%1$d pts</string>
+    <string name="best_score">Best Score</string>
+
+    <!-- Home -->
+    <string name="home_tagline">Test Your Knowledge</string>
+    <string name="home_title_description">KnowIt - Test Your Knowledge</string>
+    <string name="home_best_score_label">🏆 Best Score</string>
+    <string name="home_best_score_description">Best score: %1$d points</string>
+    <string name="home_play">Play Now\u0020\u0020▶</string>
+    <string name="home_play_description">Play game</string>
+    <string name="home_rules">%1$d questions • %2$d categories\n+%3$d pts per correct • streak bonuses!</string>
+
+    <!-- Game -->
+    <string name="game_progress">Q%1$d / %2$d</string>
+    <string name="game_streak_badge">" ×%1$d"</string>
+    <string name="game_type_multiple_choice">Multiple Choice</string>
+    <string name="game_type_type_in">Type In</string>
+    <string name="game_answer_label">Your answer</string>
+    <string name="game_submit">Submit</string>
+    <string name="game_points_awarded">+%1$d pts!</string>
+    <string name="game_points_awarded_streak">+%1$d pts! 🔥</string>
+    <string name="game_streak">Streak ×%1$d</string>
+    <string name="game_wrong">Wrong!</string>
+    <string name="game_correct_answer">Answer: %1$s</string>
+    <string name="game_next">Next ›</string>
+    <string name="game_option_correct">Correct answer</string>
+    <string name="game_option_wrong">Your answer, incorrect</string>
+
+    <!-- Result -->
+    <string name="result_title">Game Over!</string>
+    <string name="result_grade_description">Grade: %1$s</string>
+    <string name="result_new_high_score">NEW HIGH SCORE!</string>
+    <string name="result_new_high_score_description">New high score achieved</string>
+    <string name="result_score_description">Score: %1$d points, Accuracy: %2$d%%</string>
+    <string name="result_final_score">Final Score</string>
+    <string name="result_correct">Correct</string>
+    <string name="result_correct_count">%1$d / %2$d</string>
+    <string name="result_accuracy">Accuracy</string>
+    <string name="result_accuracy_value">%1$d%%</string>
+    <string name="result_message_perfect">Perfect score! You\'re a genius! 🎉</string>
+    <string name="result_message_excellent">Excellent work! Almost perfect! 🌟</string>
+    <string name="result_message_good">Good job! Keep practicing! 💪</string>
+    <string name="result_message_ok">Not bad! Room to improve! 📚</string>
+    <string name="result_message_low">Keep studying, you\'ll get there! 🔥</string>
+    <string name="result_play_again">Play Again\u0020\u0020▶</string>
+    <string name="result_play_again_description">Play another game</string>
 </resources>

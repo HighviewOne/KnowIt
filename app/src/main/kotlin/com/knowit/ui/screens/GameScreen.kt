@@ -20,12 +20,17 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.rotate
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.LiveRegionMode
+import androidx.compose.ui.semantics.liveRegion
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.knowit.model.Category
+import com.knowit.R
 import com.knowit.model.QuestionType
 import com.knowit.ui.theme.*
 import com.knowit.viewmodel.AnswerStatus
@@ -137,22 +142,12 @@ fun GameScreen(
         }
     }
 
-    val categoryColor = when (currentQuestion.category) {
-        Category.SCIENCE -> ScienceColor
-        Category.HISTORY -> HistoryColor
-        Category.GEOGRAPHY -> GeographyColor
-        Category.POP_CULTURE -> PopCultureColor
-        Category.TECH -> TechColor
-    }
+    val categoryColor = currentQuestion.category.color
 
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(
-                brush = Brush.verticalGradient(
-                    colors = listOf(KnowItBackground, Color(0xFF1A1A2E))
-                )
-            )
+            .screenBackground()
             .safeDrawingPadding()
     ) {
         Column(
@@ -170,7 +165,7 @@ fun GameScreen(
             ) {
                 // Question counter
                 Text(
-                    text = "Q$questionNumber / $totalQuestions",
+                    text = stringResource(R.string.game_progress, questionNumber, totalQuestions),
                     style = MaterialTheme.typography.titleMedium,
                     color = Color.White.copy(alpha = 0.8f),
                     fontWeight = FontWeight.Bold
@@ -181,7 +176,7 @@ fun GameScreen(
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Text(text = "🔥", fontSize = 20.sp)
                         Text(
-                            text = " ×${state.streak}",
+                            text = stringResource(R.string.game_streak_badge, state.streak),
                             style = MaterialTheme.typography.titleMedium,
                             color = StreakGold,
                             fontWeight = FontWeight.ExtraBold
@@ -191,7 +186,7 @@ fun GameScreen(
 
                 // Animated score
                 Text(
-                    text = "$animatedScore pts",
+                    text = stringResource(R.string.points, animatedScore),
                     style = MaterialTheme.typography.titleMedium,
                     color = KnowItSecondary,
                     fontWeight = FontWeight.ExtraBold
@@ -209,7 +204,7 @@ fun GameScreen(
                         fontSize = 14.sp
                     )
                     Text(
-                        text = currentQuestion.category.displayName,
+                        text = stringResource(currentQuestion.category.labelRes),
                         style = MaterialTheme.typography.labelLarge,
                         color = categoryColor,
                         fontWeight = FontWeight.SemiBold
@@ -277,8 +272,12 @@ fun GameScreen(
                             shape = RoundedCornerShape(8.dp)
                         ) {
                             Text(
-                                text = if (currentQuestion.type == QuestionType.MULTIPLE_CHOICE)
-                                    "Multiple Choice" else "Type In",
+                                text = stringResource(
+                                    if (currentQuestion.type == QuestionType.MULTIPLE_CHOICE)
+                                        R.string.game_type_multiple_choice
+                                    else
+                                        R.string.game_type_type_in
+                                ),
                                 style = MaterialTheme.typography.labelLarge,
                                 color = categoryColor,
                                 modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp)
@@ -375,6 +374,8 @@ private fun MultipleChoiceSection(
     onOptionSelected: (String) -> Unit
 ) {
     val revealed = answerStatus != AnswerStatus.NONE
+    val correctDescription = stringResource(R.string.game_option_correct)
+    val wrongDescription = stringResource(R.string.game_option_wrong)
 
     Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
         // 2×2 grid
@@ -423,7 +424,11 @@ private fun MultipleChoiceSection(
                         onClick = { if (!revealed) onOptionSelected(option) },
                         modifier = Modifier
                             .weight(1f)
-                            .height(72.dp),
+                            .height(72.dp)
+                            .semantics {
+                                if (revealed && isCorrect) stateDescription = correctDescription
+                                else if (revealed && isSelected) stateDescription = wrongDescription
+                            },
                         shape = RoundedCornerShape(14.dp),
                         colors = ButtonDefaults.buttonColors(
                             containerColor = containerColor,
@@ -468,7 +473,7 @@ private fun TypeInSection(
             value = text,
             onValueChange = { if (!isSubmitted) onTextChange(it) },
             modifier = Modifier.fillMaxWidth(),
-            label = { Text("Your answer") },
+            label = { Text(stringResource(R.string.game_answer_label)) },
             readOnly = isSubmitted,
             singleLine = true,
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
@@ -497,7 +502,7 @@ private fun TypeInSection(
                 enabled = text.isNotBlank()
             ) {
                 Text(
-                    text = "Submit",
+                    text = stringResource(R.string.game_submit),
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold,
                     color = Color.White
@@ -524,7 +529,8 @@ private fun FeedbackRow(
             else
                 WrongRed.copy(alpha = 0.15f)
         ),
-        shape = RoundedCornerShape(16.dp)
+        shape = RoundedCornerShape(16.dp),
+        modifier = Modifier.semantics { liveRegion = LiveRegionMode.Polite }
     ) {
         Row(
             modifier = Modifier
@@ -535,29 +541,31 @@ private fun FeedbackRow(
         ) {
             Column(modifier = Modifier.weight(1f)) {
                 if (isCorrect) {
-                    val bonusText = if (streak >= 2) " 🔥" else ""
                     Text(
-                        text = "+$pointsAwarded pts!$bonusText",
+                        text = stringResource(
+                            if (streak >= 2) R.string.game_points_awarded_streak else R.string.game_points_awarded,
+                            pointsAwarded
+                        ),
                         style = MaterialTheme.typography.titleMedium,
                         color = CorrectGreenLight,
                         fontWeight = FontWeight.ExtraBold
                     )
                     if (streak >= 2) {
                         Text(
-                            text = "Streak ×$streak",
+                            text = stringResource(R.string.game_streak, streak),
                             style = MaterialTheme.typography.bodyMedium,
                             color = StreakGold
                         )
                     }
                 } else {
                     Text(
-                        text = "Wrong!",
+                        text = stringResource(R.string.game_wrong),
                         style = MaterialTheme.typography.titleMedium,
                         color = WrongRedLight,
                         fontWeight = FontWeight.ExtraBold
                     )
                     Text(
-                        text = "Answer: $correctAnswer",
+                        text = stringResource(R.string.game_correct_answer, correctAnswer),
                         style = MaterialTheme.typography.bodyMedium,
                         color = Color.White.copy(alpha = 0.7f)
                     )
@@ -574,7 +582,7 @@ private fun FeedbackRow(
                 )
             ) {
                 Text(
-                    text = "Next ›",
+                    text = stringResource(R.string.game_next),
                     style = MaterialTheme.typography.labelLarge,
                     fontWeight = FontWeight.Bold,
                     color = Color.White

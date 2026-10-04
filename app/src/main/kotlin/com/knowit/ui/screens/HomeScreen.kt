@@ -10,8 +10,8 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.draw.scale
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
@@ -19,6 +19,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.knowit.R
+import com.knowit.data.questionBank
+import com.knowit.model.Category
+import com.knowit.model.Scoring
 import com.knowit.ui.theme.*
 import kotlinx.coroutines.delay
 
@@ -39,33 +43,24 @@ fun HomeScreen(
         label = "titleScale"
     )
 
-    // Staggered emoji entrance
-    val emojis = listOf("🔬", "📜", "🌍", "🎬", "💻")
-    val emojiVisible = remember { mutableStateListOf(*Array(emojis.size) { false }) }
+    // Staggered category emoji entrance
+    val categories = Category.entries
+    val emojiVisible = remember { mutableStateListOf(*Array(categories.size) { false }) }
 
     LaunchedEffect(Unit) {
-        emojis.indices.forEach { i ->
+        categories.indices.forEach { i ->
             delay(200L * i)
             emojiVisible[i] = true
         }
     }
-
-    // Play button press scale
-    var buttonPressed by remember { mutableStateOf(false) }
-    val buttonScale by animateFloatAsState(
-        targetValue = if (buttonPressed) 0.93f else 1f,
-        animationSpec = spring(dampingRatio = Spring.DampingRatioMediumBouncy),
-        label = "buttonScale"
-    )
+    val titleDescription = stringResource(R.string.home_title_description)
+    val bestScoreDescription = stringResource(R.string.home_best_score_description, highScore)
+    val playDescription = stringResource(R.string.home_play_description)
 
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(
-                brush = Brush.verticalGradient(
-                    colors = listOf(KnowItBackground, Color(0xFF1A1A2E))
-                )
-            )
+            .screenBackground()
             .safeDrawingPadding(),
         contentAlignment = Alignment.Center
     ) {
@@ -80,17 +75,17 @@ fun HomeScreen(
 
             // Title
             Text(
-                text = "KnowIt",
+                text = stringResource(R.string.app_name),
                 style = MaterialTheme.typography.displayLarge,
                 fontWeight = FontWeight.ExtraBold,
                 color = KnowItSecondary,
                 modifier = Modifier
                     .scale(titleScale)
-                    .semantics { contentDescription = "KnowIt - Test Your Knowledge" }
+                    .semantics { contentDescription = titleDescription }
             )
 
             Text(
-                text = "Test Your Knowledge",
+                text = stringResource(R.string.home_tagline),
                 style = MaterialTheme.typography.titleMedium,
                 color = Color.White.copy(alpha = 0.7f),
                 textAlign = TextAlign.Center
@@ -103,7 +98,8 @@ fun HomeScreen(
                 horizontalArrangement = Arrangement.spacedBy(12.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                emojis.forEachIndexed { index, emoji ->
+                categories.forEachIndexed { index, category ->
+                    val label = stringResource(category.labelRes)
                     val scale by animateFloatAsState(
                         targetValue = if (emojiVisible[index]) 1f else 0f,
                         animationSpec = spring(
@@ -113,18 +109,11 @@ fun HomeScreen(
                         label = "emoji_$index"
                     )
                     Text(
-                        text = emoji,
+                        text = category.emoji,
                         fontSize = 32.sp,
                         modifier = Modifier
                             .scale(scale)
-                            .semantics { contentDescription = when(emoji) {
-                                "🔬" -> "Science"
-                                "📜" -> "History"
-                                "🌍" -> "Geography"
-                                "🎬" -> "Movies"
-                                "💻" -> "Technology"
-                                else -> emoji
-                            }}
+                            .semantics { contentDescription = label }
                     )
                 }
             }
@@ -136,19 +125,19 @@ fun HomeScreen(
                 Card(
                     colors = CardDefaults.cardColors(containerColor = KnowItCard),
                     shape = RoundedCornerShape(16.dp),
-                    modifier = Modifier.semantics { contentDescription = "Best score: $highScore points" }
+                    modifier = Modifier.semantics { contentDescription = bestScoreDescription }
                 ) {
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,
                         modifier = Modifier.padding(horizontal = 32.dp, vertical = 16.dp)
                     ) {
                         Text(
-                            text = "🏆 Best Score",
+                            text = stringResource(R.string.home_best_score_label),
                             style = MaterialTheme.typography.labelLarge,
                             color = StreakGold
                         )
                         Text(
-                            text = "$highScore pts",
+                            text = stringResource(R.string.points, highScore),
                             style = MaterialTheme.typography.headlineMedium,
                             fontWeight = FontWeight.ExtraBold,
                             color = StreakGold
@@ -160,15 +149,11 @@ fun HomeScreen(
 
             // Play button
             Button(
-                onClick = {
-                    buttonPressed = true
-                    onPlay()
-                },
+                onClick = onPlay,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(64.dp)
-                    .scale(buttonScale)
-                    .semantics { contentDescription = "Play game" },
+                    .semantics { contentDescription = playDescription },
                 shape = RoundedCornerShape(20.dp),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = KnowItPrimary
@@ -176,7 +161,7 @@ fun HomeScreen(
                 elevation = ButtonDefaults.buttonElevation(defaultElevation = 8.dp)
             ) {
                 Text(
-                    text = "Play Now  ▶",
+                    text = stringResource(R.string.home_play),
                     style = MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.ExtraBold,
                     color = Color.White
@@ -187,7 +172,12 @@ fun HomeScreen(
 
             // Subtitle info
             Text(
-                text = "20 questions • 5 categories\n+10 pts per correct • streak bonuses!",
+                text = stringResource(
+                    R.string.home_rules,
+                    questionBank.size,
+                    Category.entries.size,
+                    Scoring.POINTS_PER_CORRECT
+                ),
                 style = MaterialTheme.typography.bodyMedium,
                 color = Color.White.copy(alpha = 0.5f),
                 textAlign = TextAlign.Center,

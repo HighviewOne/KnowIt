@@ -1,6 +1,5 @@
 package com.knowit.viewmodel
 
-import androidx.lifecycle.SavedStateHandle
 import com.knowit.data.HighScoreRepository
 import com.knowit.data.questionBank
 import com.knowit.model.Category
@@ -35,7 +34,7 @@ class GameViewModelTest {
         Dispatchers.setMain(testDispatcher)
         repo = mockk(relaxed = true)
         coEvery { repo.getHighScore() } returns 0
-        vm = GameViewModel(SavedStateHandle(), repo)
+        vm = GameViewModel(repo)
     }
 
     @After
@@ -151,6 +150,18 @@ class GameViewModelTest {
     }
 
     @Test
+    fun `type-in ignores punctuation`() {
+        startFixtureGame()
+        answerCurrent(correct = true)
+        vm.advanceToNextQuestion()
+
+        vm.updateTypeInText("Robert Downey, Jr.")
+        vm.submitTypeInAnswer()
+
+        assertEquals(AnswerStatus.CORRECT, vm.state.value.answerStatus)
+    }
+
+    @Test
     fun `type-in accepts alternate accepted answers`() {
         startFixtureGame()
         answerCurrent(correct = true)
@@ -209,9 +220,9 @@ class GameViewModelTest {
 
     @Test
     fun `question order differs between seeds`() {
-        val orderA = GameViewModel(SavedStateHandle(), repo, random = Random(1))
+        val orderA = GameViewModel(repo, random = Random(1))
             .apply { startGame() }.state.value.questions.map { it.id }
-        val orderB = GameViewModel(SavedStateHandle(), repo, random = Random(2))
+        val orderB = GameViewModel(repo, random = Random(2))
             .apply { startGame() }.state.value.questions.map { it.id }
 
         assertTrue(orderA != orderB)
@@ -237,7 +248,7 @@ class GameViewModelTest {
     @Test
     fun `beating the previous best flags a new high score`() = runTest {
         coEvery { repo.getHighScore() } returns 100
-        vm = GameViewModel(SavedStateHandle(), repo)
+        vm = GameViewModel(repo)
         vm.startGame()
         answerAllCorrectly()
 
@@ -248,7 +259,7 @@ class GameViewModelTest {
     @Test
     fun `tying the previous best is not a new high score`() = runTest {
         coEvery { repo.getHighScore() } returns 295
-        vm = GameViewModel(SavedStateHandle(), repo)
+        vm = GameViewModel(repo)
         vm.startGame()
         answerAllCorrectly()
 
@@ -258,7 +269,7 @@ class GameViewModelTest {
     @Test
     fun `scoring below the previous best keeps it`() = runTest {
         coEvery { repo.getHighScore() } returns 295
-        vm = GameViewModel(SavedStateHandle(), repo)
+        vm = GameViewModel(repo)
         vm.startGame()
         repeat(vm.state.value.questions.size) {
             answerCurrent(correct = false)
@@ -319,7 +330,7 @@ class GameViewModelTest {
                 acceptedAnswers = listOf("rdj")
             )
         )
-        vm = GameViewModel(SavedStateHandle(), repo, questionSource = fixture)
+        vm = GameViewModel(repo, questionSource = fixture)
         vm.startGame()
     }
 }

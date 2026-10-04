@@ -90,7 +90,7 @@ Requires JDK 17 and the Android SDK (`ANDROID_HOME` or `local.properties`). The 
 ./gradlew testDebugUnitTest
 ```
 
-`GameViewModelTest` covers scoring, streaks, answer matching, question shuffling, and high-score logic. CI runs it on every push and pull request.
+Unit tests cover the game flow (`GameViewModelTest`), scoring, type-in answer matching, and high-score persistence. CI runs it on every push and pull request.
 
 ### Sideload from a release
 
@@ -104,15 +104,18 @@ Requires JDK 17 and the Android SDK (`ANDROID_HOME` or `local.properties`). The 
 app/src/main/
 └── kotlin/com/knowit/
     ├── MainActivity.kt
-    ├── model/Question.kt              # Data models: Question, Category, QuestionType
+    ├── model/
+    │   ├── Question.kt                # Data models: Question, Category, QuestionType
+    │   ├── AnswerMatching.kt          # Forgiving type-in answer comparison
+    │   └── Scoring.kt                 # Points, streak bonus, max score
     ├── data/
     │   ├── QuestionBank.kt            # 20 trivia questions
     │   └── HighScoreRepository.kt     # DataStore read/write
     ├── viewmodel/
-    │   ├── GameViewModel.kt           # Game state, scoring & streak logic
+    │   ├── GameViewModel.kt           # Game state & flow (questions, answers, streaks)
     │   └── GameViewModelFactory.kt
     └── ui/
-        ├── theme/                     # Color, Type, Theme
+        ├── theme/                     # Color, Type, Theme, shared styles
         └── screens/
             ├── HomeScreen.kt          # Animated home with entrance effects
             ├── GameScreen.kt          # Confetti, shake, glow animations

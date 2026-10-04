@@ -20,8 +20,7 @@ val questionBank: List<Question> = listOf(
         type = QuestionType.TYPE_IN,
         category = Category.HISTORY,
         questionText = "In what year did World War II end?",
-        correctAnswer = "1945",
-        acceptedAnswers = listOf("1945")
+        correctAnswer = "1945"
     ),
     // Pair 2: Geography MC
     Question(
@@ -39,7 +38,7 @@ val questionBank: List<Question> = listOf(
         category = Category.POP_CULTURE,
         questionText = "Who played Iron Man in the Marvel Cinematic Universe?",
         correctAnswer = "Robert Downey Jr",
-        acceptedAnswers = listOf("robert downey jr", "robert downey jr.", "rdj", "robert downey")
+        acceptedAnswers = listOf("rdj", "robert downey")
     ),
     // Pair 3: Tech MC
     Question(
@@ -56,8 +55,7 @@ val questionBank: List<Question> = listOf(
         type = QuestionType.TYPE_IN,
         category = Category.SCIENCE,
         questionText = "What planet is known as the Red Planet?",
-        correctAnswer = "Mars",
-        acceptedAnswers = listOf("mars")
+        correctAnswer = "Mars"
     ),
     // Pair 4: History MC
     Question(
@@ -75,7 +73,7 @@ val questionBank: List<Question> = listOf(
         category = Category.GEOGRAPHY,
         questionText = "What is the longest river in the world?",
         correctAnswer = "Nile",
-        acceptedAnswers = listOf("nile", "nile river", "the nile")
+        acceptedAnswers = listOf("nile river")
     ),
     // Pair 5: Pop Culture MC
     Question(
@@ -92,8 +90,7 @@ val questionBank: List<Question> = listOf(
         type = QuestionType.TYPE_IN,
         category = Category.TECH,
         questionText = "What programming language was created by Guido van Rossum?",
-        correctAnswer = "Python",
-        acceptedAnswers = listOf("python")
+        correctAnswer = "Python"
     ),
     // Pair 6: Science MC
     Question(
@@ -111,7 +108,7 @@ val questionBank: List<Question> = listOf(
         category = Category.HISTORY,
         questionText = "What ancient wonder was located in Alexandria, Egypt?",
         correctAnswer = "Lighthouse",
-        acceptedAnswers = listOf("lighthouse", "lighthouse of alexandria", "the lighthouse of alexandria", "pharos")
+        acceptedAnswers = listOf("lighthouse of alexandria", "pharos")
     ),
     // Pair 7: Geography MC
     Question(
@@ -129,7 +126,7 @@ val questionBank: List<Question> = listOf(
         category = Category.POP_CULTURE,
         questionText = "How many strings does a standard guitar have?",
         correctAnswer = "6",
-        acceptedAnswers = listOf("6", "six")
+        acceptedAnswers = listOf("six")
     ),
     // Pair 8: Tech MC
     Question(
@@ -147,7 +144,7 @@ val questionBank: List<Question> = listOf(
         category = Category.SCIENCE,
         questionText = "What is the speed of light in km/s (approximate whole number)?",
         correctAnswer = "300000",
-        acceptedAnswers = listOf("300000", "299792", "300,000", "299,792")
+        acceptedAnswers = listOf("299792")
     ),
     // Pair 9: History MC
     Question(
@@ -165,7 +162,7 @@ val questionBank: List<Question> = listOf(
         category = Category.GEOGRAPHY,
         questionText = "What is the smallest country in the world?",
         correctAnswer = "Vatican City",
-        acceptedAnswers = listOf("vatican city", "vatican", "holy see")
+        acceptedAnswers = listOf("vatican", "holy see")
     ),
     // Pair 10: Pop Culture MC
     Question(
@@ -182,7 +179,6 @@ val questionBank: List<Question> = listOf(
         type = QuestionType.TYPE_IN,
         category = Category.TECH,
         questionText = "What does 'AI' stand for in technology?",
-        correctAnswer = "Artificial Intelligence",
-        acceptedAnswers = listOf("artificial intelligence")
+        correctAnswer = "Artificial Intelligence"
     )
 )
