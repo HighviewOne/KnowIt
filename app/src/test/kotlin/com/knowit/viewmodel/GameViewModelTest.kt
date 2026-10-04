@@ -2,6 +2,9 @@ package com.knowit.viewmodel
 
 import androidx.lifecycle.SavedStateHandle
 import com.knowit.data.HighScoreRepository
+import com.knowit.data.questionBank
+import com.knowit.model.Category
+import com.knowit.model.Question
 import com.knowit.model.QuestionType
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -14,8 +17,11 @@ import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import org.junit.After
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
+import kotlin.random.Random
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class GameViewModelTest {
@@ -92,7 +98,7 @@ class GameViewModelTest {
         vm.submitMultipleChoiceAnswer(q0.correctAnswer) // score=10, streak=1
         vm.advanceToNextQuestion()
 
-        // questions[1] is TYPE_IN, correctAnswer="1945"
+        // questions alternate MC / TYPE_IN, so questions[1] is TYPE_IN
         val q1 = vm.state.value.questions[1]
         require(q1.type == QuestionType.TYPE_IN)
         vm.updateTypeInText(q1.correctAnswer)
@@ -134,10 +140,11 @@ class GameViewModelTest {
 
     @Test
     fun `type-in answer matches case-insensitively`() {
-        vm.startGame()
-        vm.advanceToNextQuestion() // questions[1]: TYPE_IN, "1945"
+        startFixtureGame()
+        answerCurrent(correct = true)
+        vm.advanceToNextQuestion() // fixture questions[1]: TYPE_IN "Robert Downey Jr"
 
-        vm.updateTypeInText("1945")
+        vm.updateTypeInText("  robert DOWNEY jr ")
         vm.submitTypeInAnswer()
 
         assertEquals(AnswerStatus.CORRECT, vm.state.value.answerStatus)
@@ -145,9 +152,9 @@ class GameViewModelTest {
 
     @Test
     fun `type-in accepts alternate accepted answers`() {
-        vm.startGame()
-        // Skip to questions[3]: TYPE_IN, "Who played Iron Man?" acceptedAnswers includes "rdj"
-        repeat(3) { vm.advanceToNextQuestion() }
+        startFixtureGame()
+        answerCurrent(correct = true)
+        vm.advanceToNextQuestion()
 
         vm.updateTypeInText("RDJ") // alternate accepted answer, case-insensitive
         vm.submitTypeInAnswer()
@@ -157,7 +164,8 @@ class GameViewModelTest {
 
     @Test
     fun `blank type-in is not submitted`() {
-        vm.startGame()
+        startFixtureGame()
+        answerCurrent(correct = true)
         vm.advanceToNextQuestion() // TYPE_IN question
 
         vm.updateTypeInText("   ")
@@ -188,6 +196,83 @@ class GameViewModelTest {
     }
 
     @Test
+    fun `startGame uses every bank question once with formats alternating`() {
+        vm.startGame()
+        val questions = vm.state.value.questions
+
+        assertEquals(questionBank.map { it.id }.sorted(), questions.map { it.id }.sorted())
+        questions.forEachIndexed { i, q ->
+            val expected = if (i % 2 == 0) QuestionType.MULTIPLE_CHOICE else QuestionType.TYPE_IN
+            assertEquals("question $i", expected, q.type)
+        }
+    }
+
+    @Test
+    fun `question order differs between seeds`() {
+        val orderA = GameViewModel(SavedStateHandle(), repo, random = Random(1))
+            .apply { startGame() }.state.value.questions.map { it.id }
+        val orderB = GameViewModel(SavedStateHandle(), repo, random = Random(2))
+            .apply { startGame() }.state.value.questions.map { it.id }
+
+        assertTrue(orderA != orderB)
+    }
+
+    @Test
+    fun `advancing before answering is ignored`() {
+        vm.startGame()
+        vm.advanceToNextQuestion()
+
+        assertEquals(0, vm.state.value.currentQuestionIndex)
+    }
+
+    @Test
+    fun `advancing after game over does not save again`() = runTest {
+        vm.startGame()
+        answerAllCorrectly()
+        vm.advanceToNextQuestion()
+
+        coVerify(exactly = 1) { repo.saveHighScore(any()) }
+    }
+
+    @Test
+    fun `beating the previous best flags a new high score`() = runTest {
+        coEvery { repo.getHighScore() } returns 100
+        vm = GameViewModel(SavedStateHandle(), repo)
+        vm.startGame()
+        answerAllCorrectly()
+
+        assertTrue(vm.state.value.isNewHighScore)
+        assertEquals(295, vm.state.value.highScore)
+    }
+
+    @Test
+    fun `tying the previous best is not a new high score`() = runTest {
+        coEvery { repo.getHighScore() } returns 295
+        vm = GameViewModel(SavedStateHandle(), repo)
+        vm.startGame()
+        answerAllCorrectly()
+
+        assertFalse(vm.state.value.isNewHighScore)
+    }
+
+    @Test
+    fun `scoring below the previous best keeps it`() = runTest {
+        coEvery { repo.getHighScore() } returns 295
+        vm = GameViewModel(SavedStateHandle(), repo)
+        vm.startGame()
+        repeat(vm.state.value.questions.size) {
+            answerCurrent(correct = false)
+            vm.advanceToNextQuestion()
+        }
+
+        with(vm.state.value) {
+            assertEquals(GamePhase.GAME_OVER, phase)
+            assertFalse(isNewHighScore)
+            assertEquals(295, highScore)
+        }
+    }
+
+    @Test
     fun `goHome resets phase to HOME`() {
         vm.startGame()
         vm.goHome()
@@ -195,16 +280,46 @@ class GameViewModelTest {
     }
 
     private fun answerAllCorrectly() {
-        val questions = vm.state.value.questions
-        questions.forEach { q ->
-            when (q.type) {
-                QuestionType.MULTIPLE_CHOICE -> vm.submitMultipleChoiceAnswer(q.correctAnswer)
-                QuestionType.TYPE_IN -> {
-                    vm.updateTypeInText(q.correctAnswer)
-                    vm.submitTypeInAnswer()
-                }
-            }
+        repeat(vm.state.value.questions.size) {
+            answerCurrent(correct = true)
             vm.advanceToNextQuestion()
         }
+    }
+
+    private fun answerCurrent(correct: Boolean) {
+        val q = vm.state.value.questions[vm.state.value.currentQuestionIndex]
+        when (q.type) {
+            QuestionType.MULTIPLE_CHOICE -> vm.submitMultipleChoiceAnswer(
+                if (correct) q.correctAnswer else q.options.first { it != q.correctAnswer }
+            )
+            QuestionType.TYPE_IN -> {
+                vm.updateTypeInText(if (correct) q.correctAnswer else "definitely wrong")
+                vm.submitTypeInAnswer()
+            }
+        }
+    }
+
+    /** One MC + one type-in question; interleaving makes the order deterministic. */
+    private fun startFixtureGame() {
+        val fixture = listOf(
+            Question(
+                id = 1,
+                type = QuestionType.MULTIPLE_CHOICE,
+                category = Category.SCIENCE,
+                questionText = "What is the chemical symbol for gold?",
+                correctAnswer = "Au",
+                options = listOf("Au", "Ag", "Fe", "Gd")
+            ),
+            Question(
+                id = 2,
+                type = QuestionType.TYPE_IN,
+                category = Category.POP_CULTURE,
+                questionText = "Who played Iron Man in the Marvel Cinematic Universe?",
+                correctAnswer = "Robert Downey Jr",
+                acceptedAnswers = listOf("rdj")
+            )
+        )
+        vm = GameViewModel(SavedStateHandle(), repo, questionSource = fixture)
+        vm.startGame()
     }
 }

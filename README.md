@@ -27,11 +27,11 @@
 ## Features
 
 - **20 questions** across 5 categories: 🔬 Science · 📜 History · 🌍 Geography · 🎬 Pop Culture · 💻 Tech
-- Alternating **Multiple Choice** and **Type-In** question formats
+- Alternating **Multiple Choice** and **Type-In** question formats, in a fresh random order every game
 - **Streak scoring** — rack up bonuses for consecutive correct answers
 - **Persistent high score** stored with Jetpack DataStore
 - Polished animations: confetti, card shake, green glow, animated score counter
-- Adaptive icon · accessibility labels · edge-to-edge layout
+- Adaptive icon · accessibility labels · edge-to-edge layout · system Back returns to the home screen
 
 ## Gameplay
 
@@ -83,6 +83,14 @@ After the first Android Studio sync (which generates the Gradle wrapper):
 ./gradlew assembleDebug
 # Output: app/build/outputs/apk/debug/app-debug.apk
 ```
+
+### Run the tests
+
+```bash
+./gradlew testDebugUnitTest
+```
+
+`GameViewModelTest` covers scoring, streaks, answer matching, question shuffling, and high-score logic. CI runs it on every push and pull request.
 
 ### Sideload from a release
 

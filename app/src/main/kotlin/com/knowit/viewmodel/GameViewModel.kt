@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlin.random.Random
 
 enum class GamePhase {
     HOME,
@@ -37,12 +38,15 @@ data class GameState(
     val highScore: Int = 0,
     val correctCount: Int = 0,
     val selectedOption: String? = null,
-    val lastPointsAwarded: Int = 0
+    val lastPointsAwarded: Int = 0,
+    val isNewHighScore: Boolean = false
 )
 
 class GameViewModel(
     private val savedStateHandle: SavedStateHandle,
-    private val highScoreRepository: HighScoreRepository
+    private val highScoreRepository: HighScoreRepository,
+    private val questionSource: List<Question> = questionBank,
+    private val random: Random = Random.Default
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(GameState())
@@ -56,13 +60,8 @@ class GameViewModel(
     }
 
     fun startGame() {
-        val questions = questionBank
-        val firstQuestion = questions.first()
-        val shuffledOptions = if (firstQuestion.type == QuestionType.MULTIPLE_CHOICE) {
-            firstQuestion.options.shuffled()
-        } else {
-            emptyList()
-        }
+        val questions = shuffledQuestions()
+        val shuffledOptions = shuffledOptionsFor(questions.first())
 
         _state.update { current ->
             current.copy(
@@ -76,10 +75,24 @@ class GameViewModel(
                 typeInText = "",
                 correctCount = 0,
                 selectedOption = null,
-                lastPointsAwarded = 0
+                lastPointsAwarded = 0,
+                isNewHighScore = false
             )
         }
     }
+
+    /** Shuffles each question type separately, then interleaves them so formats still alternate. */
+    private fun shuffledQuestions(): List<Question> {
+        val (multipleChoice, typeIn) = questionSource
+            .shuffled(random)
+            .partition { it.type == QuestionType.MULTIPLE_CHOICE }
+        return (0 until maxOf(multipleChoice.size, typeIn.size)).flatMap { i ->
+            listOfNotNull(multipleChoice.getOrNull(i), typeIn.getOrNull(i))
+        }
+    }
+
+    private fun shuffledOptionsFor(question: Question): List<String> =
+        if (question.type == QuestionType.MULTIPLE_CHOICE) question.options.shuffled(random) else emptyList()
 
     fun submitMultipleChoiceAnswer(option: String) {
         val state = _state.value
@@ -144,31 +157,30 @@ class GameViewModel(
 
     fun advanceToNextQuestion() {
         val state = _state.value
+        if (state.phase != GamePhase.PLAYING) return
+        if (state.answerStatus == AnswerStatus.NONE) return
         val nextIndex = state.currentQuestionIndex + 1
 
         if (nextIndex >= state.questions.size) {
+            val isNewHighScore = state.score > state.highScore
             val newHighScore = maxOf(state.highScore, state.score)
-            
+
             // Persist high score
             viewModelScope.launch {
                 highScoreRepository.saveHighScore(newHighScore)
             }
-            
+
             _state.update {
                 it.copy(
                     phase = GamePhase.GAME_OVER,
-                    highScore = newHighScore
+                    highScore = newHighScore,
+                    isNewHighScore = isNewHighScore
                 )
             }
             return
         }
 
-        val nextQuestion = state.questions[nextIndex]
-        val shuffledOptions = if (nextQuestion.type == QuestionType.MULTIPLE_CHOICE) {
-            nextQuestion.options.shuffled()
-        } else {
-            emptyList()
-        }
+        val shuffledOptions = shuffledOptionsFor(state.questions[nextIndex])
 
         _state.update {
             it.copy(

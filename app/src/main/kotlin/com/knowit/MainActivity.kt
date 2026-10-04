@@ -1,7 +1,10 @@
 package com.knowit
 
+import android.graphics.Color
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.SystemBarStyle
+import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
@@ -21,13 +24,21 @@ import com.knowit.viewmodel.GameViewModelFactory
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
+        // The UI is always dark, so force light system-bar icons regardless of system theme.
+        enableEdgeToEdge(
+            statusBarStyle = SystemBarStyle.dark(Color.TRANSPARENT),
+            navigationBarStyle = SystemBarStyle.dark(Color.TRANSPARENT)
+        )
+        val factory = GameViewModelFactory(this, applicationContext)
         setContent {
             KnowItTheme {
                 Surface(modifier = Modifier.fillMaxSize()) {
-                    val factory = GameViewModelFactory(this@MainActivity, this@MainActivity)
                     val viewModel: GameViewModel = viewModel(factory = factory)
                     val state by viewModel.state.collectAsStateWithLifecycle()
+
+                    BackHandler(enabled = state.phase != GamePhase.HOME) {
+                        viewModel.goHome()
+                    }
 
                     when (state.phase) {
                         GamePhase.HOME -> HomeScreen(

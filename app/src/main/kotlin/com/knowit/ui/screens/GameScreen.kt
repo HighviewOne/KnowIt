@@ -4,6 +4,8 @@ import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
@@ -92,7 +94,6 @@ fun GameScreen(
     // Confetti particles state
     var confettiParticles by remember { mutableStateOf<List<ConfettiParticle>>(emptyList()) }
     var confettiActive by remember { mutableStateOf(false) }
-    var confettiStartTime by remember { mutableStateOf(0L) }
     val confettiDuration = 1500L
     val confettiColors = listOf(
         CorrectGreen, KnowItPrimary, StreakGold, WrongRedLight, KnowItSecondary
@@ -113,7 +114,6 @@ fun GameScreen(
                 )
             }
             confettiActive = true
-            confettiStartTime = System.currentTimeMillis()
         } else if (state.answerStatus == AnswerStatus.NONE) {
             confettiActive = false
             confettiParticles = emptyList()
@@ -124,8 +124,11 @@ fun GameScreen(
     var confettiTime by remember { mutableStateOf(0f) }
     LaunchedEffect(confettiActive) {
         if (confettiActive) {
-            val startMs = System.currentTimeMillis()
-            while (confettiActive && (System.currentTimeMillis() - startMs) < confettiDuration) {
+            // Frame times use the Choreographer clock, not wall-clock time, so the
+            // start must come from the first frame rather than System.currentTimeMillis().
+            val startMs = withFrameMillis { it }
+            confettiTime = 0f
+            while (confettiActive && confettiTime < confettiDuration) {
                 withFrameMillis { frameTimeMs ->
                     confettiTime = (frameTimeMs - startMs).toFloat()
                 }
@@ -150,11 +153,12 @@ fun GameScreen(
                     colors = listOf(KnowItBackground, Color(0xFF1A1A2E))
                 )
             )
-            .imePadding()
+            .safeDrawingPadding()
     ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
+                .verticalScroll(rememberScrollState())
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {

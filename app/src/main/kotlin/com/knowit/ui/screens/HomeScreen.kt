@@ -2,6 +2,8 @@ package com.knowit.ui.screens
 
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
@@ -63,13 +65,16 @@ fun HomeScreen(
                 brush = Brush.verticalGradient(
                     colors = listOf(KnowItBackground, Color(0xFF1A1A2E))
                 )
-            ),
+            )
+            .safeDrawingPadding(),
         contentAlignment = Alignment.Center
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(24.dp),
-            modifier = Modifier.padding(32.dp)
+            modifier = Modifier
+                .verticalScroll(rememberScrollState())
+                .padding(32.dp)
         ) {
             Spacer(modifier = Modifier.height(32.dp))
 
