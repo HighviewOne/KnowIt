@@ -1,32 +1,12 @@
-# Add project specific ProGuard rules here.
-# For more details, see:
-#   http://developer.android.com/guide/developing/tools/proguard.html
+# Project-specific R8 rules.
+#
+# Compose, Lifecycle, DataStore, and coroutines ship their own consumer rules,
+# so no blanket -keep rules are needed here; adding them stops R8 from
+# shrinking those libraries. Only add a rule when a release build proves it's needed.
 
-# Keep all Kotlin annotations
--keepattributes *Annotation*
-
-# Keep Kotlin companion objects
--keepclassmembers class ** {
-    @kotlin.jvm.JvmStatic *;
-}
-
-# Compose - keep essential classes and interfaces
--keep class androidx.compose.runtime.** { *; }
--keep class androidx.compose.foundation.** { *; }
--keep class androidx.compose.material3.** { *; }
--keep class androidx.compose.ui.** { *; }
-
-# Lifecycle and saved state
--keep class androidx.lifecycle.** { *; }
--keep class androidx.savedstate.** { *; }
-
-# DataStore
--keep class androidx.datastore.preferences.** { *; }
-
-# Remove logging in release builds
+# Remove verbose/debug/info logging in release builds
 -assumenosideeffects class android.util.Log {
     public static *** d(...);
     public static *** v(...);
     public static *** i(...);
 }
-
