@@ -20,10 +20,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.knowit.R
-import com.knowit.data.questionBank
 import com.knowit.model.Category
 import com.knowit.model.Scoring
 import com.knowit.ui.theme.*
+import com.knowit.viewmodel.GameViewModel
 import kotlinx.coroutines.delay
 
 @Composable
@@ -174,7 +174,7 @@ fun HomeScreen(
             Text(
                 text = stringResource(
                     R.string.home_rules,
-                    questionBank.size,
+                    GameViewModel.QUESTIONS_PER_GAME,
                     Category.entries.size,
                     Scoring.POINTS_PER_CORRECT
                 ),

@@ -207,11 +207,14 @@ class GameViewModelTest {
     }
 
     @Test
-    fun `startGame uses every bank question once with formats alternating`() {
+    fun `startGame draws 20 distinct bank questions with formats alternating`() {
         vm.startGame()
         val questions = vm.state.value.questions
+        val bankIds = questionBank.map { it.id }.toSet()
 
-        assertEquals(questionBank.map { it.id }.sorted(), questions.map { it.id }.sorted())
+        assertEquals(GameViewModel.QUESTIONS_PER_GAME, questions.size)
+        assertEquals(questions.size, questions.map { it.id }.toSet().size)
+        assertTrue(questions.all { it.id in bankIds })
         questions.forEachIndexed { i, q ->
             val expected = if (i % 2 == 0) QuestionType.MULTIPLE_CHOICE else QuestionType.TYPE_IN
             assertEquals("question $i", expected, q.type)
@@ -226,6 +229,17 @@ class GameViewModelTest {
             .apply { startGame() }.state.value.questions.map { it.id }
 
         assertTrue(orderA != orderB)
+    }
+
+    @Test
+    fun `consecutive games draw different question sets`() {
+        val seeded = GameViewModel(repo, random = Random(42))
+        seeded.startGame()
+        val first = seeded.state.value.questions.map { it.id }.toSet()
+        seeded.startGame()
+        val second = seeded.state.value.questions.map { it.id }.toSet()
+
+        assertTrue(first != second)
     }
 
     @Test

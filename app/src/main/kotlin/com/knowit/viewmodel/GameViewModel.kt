@@ -46,8 +46,14 @@ data class GameState(
 class GameViewModel(
     private val highScoreRepository: HighScoreRepository,
     private val questionSource: List<Question> = questionBank,
-    private val random: Random = Random.Default
+    private val random: Random = Random.Default,
+    private val questionsPerGame: Int = QUESTIONS_PER_GAME
 ) : ViewModel() {
+
+    companion object {
+        /** Each game draws this many questions from the bank, half of each format. */
+        const val QUESTIONS_PER_GAME = 20
+    }
 
     private val _state = MutableStateFlow(GameState())
     val state: StateFlow<GameState> = _state.asStateFlow()
@@ -81,11 +87,17 @@ class GameViewModel(
         }
     }
 
-    /** Shuffles each question type separately, then interleaves them so formats still alternate. */
+    /**
+     * Draws [questionsPerGame] random questions (half of each format), then interleaves
+     * them so formats alternate.
+     */
     private fun shuffledQuestions(): List<Question> {
-        val (multipleChoice, typeIn) = questionSource
+        val perType = questionsPerGame / 2
+        val (allMultipleChoice, allTypeIn) = questionSource
             .shuffled(random)
             .partition { it.type == QuestionType.MULTIPLE_CHOICE }
+        val multipleChoice = allMultipleChoice.take(perType)
+        val typeIn = allTypeIn.take(perType)
         return (0 until maxOf(multipleChoice.size, typeIn.size)).flatMap { i ->
             listOfNotNull(multipleChoice.getOrNull(i), typeIn.getOrNull(i))
         }
