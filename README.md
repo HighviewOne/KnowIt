@@ -7,8 +7,8 @@
   [![Build APK](https://github.com/HighviewOne/KnowIt/actions/workflows/build.yml/badge.svg)](https://github.com/HighviewOne/KnowIt/actions/workflows/build.yml)
   [![Release](https://img.shields.io/github/v/release/HighviewOne/KnowIt?style=flat-square&color=7B2FBE&label=release)](https://github.com/HighviewOne/KnowIt/releases)
   [![Android](https://img.shields.io/badge/Android-8.0%2B-3DDC84?style=flat-square&logo=android&logoColor=white)](https://github.com/HighviewOne/KnowIt)
-  [![Kotlin](https://img.shields.io/badge/Kotlin-2.0.21-7F52FF?style=flat-square&logo=kotlin&logoColor=white)](https://kotlinlang.org)
-  [![Compose](https://img.shields.io/badge/Jetpack_Compose-2024.11-4285F4?style=flat-square&logo=jetpackcompose&logoColor=white)](https://developer.android.com/jetpack/compose)
+  [![Kotlin](https://img.shields.io/badge/Kotlin-2.4.20-7F52FF?style=flat-square&logo=kotlin&logoColor=white)](https://kotlinlang.org)
+  [![Compose](https://img.shields.io/badge/Jetpack_Compose-2026.09-4285F4?style=flat-square&logo=jetpackcompose&logoColor=white)](https://developer.android.com/jetpack/compose)
   [![License](https://img.shields.io/badge/license-MIT-blue?style=flat-square)](LICENSE)
 
   <br/>
@@ -53,12 +53,13 @@
 
 | | |
 |---|---|
-| Language | Kotlin 2.0.21 |
-| UI | Jetpack Compose (BOM 2024.11.00) |
+| Language | Kotlin 2.4.20 |
+| UI | Jetpack Compose (BOM 2026.09.00) |
 | Architecture | MVVM · `StateFlow` · `ViewModel` |
 | Persistence | Jetpack DataStore Preferences |
-| Build | AGP 8.6.1 · Gradle 8.9 · JVM 17 |
+| Build | AGP 9.4.1 · Gradle 9.8.0 · JVM 17 |
 | Min SDK | 26 (Android 8.0) |
+| Compile SDK | 37 |
 | Target SDK | 35 (Android 15) |
 
 ## Getting Started
@@ -69,7 +70,7 @@
 git clone https://github.com/HighviewOne/KnowIt.git
 ```
 
-1. Open the project in **Android Studio Hedgehog** or newer
+1. Open the project in a current **Android Studio** (one that supports AGP 9.4)
 2. Click **Sync Now**
 3. Run on any API 26+ emulator or physical device
 
@@ -77,7 +78,7 @@ git clone https://github.com/HighviewOne/KnowIt.git
 
 ### Build from the terminal
 
-Requires JDK 17 and the Android SDK (`ANDROID_HOME` or `local.properties`). The Gradle wrapper downloads Gradle 8.9 on first run:
+Requires JDK 17 and the Android SDK (`ANDROID_HOME` or `local.properties`). The Gradle wrapper downloads Gradle 9.8.0 on first run:
 
 ```bash
 ./gradlew assembleDebug
