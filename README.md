@@ -91,13 +91,15 @@ Requires JDK 17 and the Android SDK (`ANDROID_HOME` or `local.properties`). The 
 ./gradlew testDebugUnitTest
 ```
 
-Unit tests cover the game flow (`GameViewModelTest`), scoring, type-in answer matching, and high-score persistence. CI runs it on every push and pull request.
+Unit tests cover the game flow (`GameViewModelTest`), scoring, type-in answer matching, high-score persistence, and question-bank integrity (unique questions, valid multiple-choice options). CI runs them on every push and pull request.
 
 ### Sideload from a release
 
-1. Download `knowit-vX.X.apk` from [Releases](https://github.com/HighviewOne/KnowIt/releases)
+1. Download `knowit-vX.Y.Z.apk` from [Releases](https://github.com/HighviewOne/KnowIt/releases)
 2. On your Android device: **Settings → Install unknown apps** → allow your browser/file manager
 3. Tap the APK and install
+
+Installing a newer release over an older one updates the app and keeps your high score.
 
 ## Project Structure
 
@@ -121,13 +123,26 @@ app/src/main/
             ├── HomeScreen.kt          # Animated home with entrance effects
             ├── GameScreen.kt          # Confetti, shake, glow animations
             └── ResultScreen.kt        # Grade, accuracy, high-score display
+
+app/src/main/res/values/strings.xml    # All UI text
+app/src/test/kotlin/com/knowit/        # JVM unit tests
 ```
 
 ## Contributing
 
 Bug reports and feature ideas are welcome! Please use the [issue tracker](https://github.com/HighviewOne/KnowIt/issues).
 
-Pull requests should target the `main` branch. See the [PR template](.github/pull_request_template.md) for what to include.
+Pull requests should target the `main` branch. See the [PR template](.github/pull_request_template.md) for what to include. PR titles end up in the release notes, so write them for players.
+
+## Releasing
+
+Push a version tag from an up-to-date `main`:
+
+```bash
+git tag -a v1.2.0 -m "KnowIt v1.2.0" && git push origin v1.2.0
+```
+
+The [release workflow](.github/workflows/release.yml) runs the tests, builds a signed APK (version name from the tag, version code `major×10000 + minor×100 + patch`), and publishes a GitHub Release with the PRs merged since the previous tag. It needs four repository secrets: `KEYSTORE_BASE64`, `KEYSTORE_PASSWORD`, `KEY_ALIAS`, `KEY_PASSWORD`. Keep the keystore backed up — without it, updates can't install over existing copies.
 
 ## License
 
