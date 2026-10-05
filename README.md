@@ -26,8 +26,8 @@
 
 ## Features
 
-- **20 questions** across 5 categories: 🔬 Science · 📜 History · 🌍 Geography · 🎬 Pop Culture · 💻 Tech
-- Alternating **Multiple Choice** and **Type-In** question formats, in a fresh random order every game
+- **20 questions per game**, drawn from a bank of 50 across 5 categories: 🔬 Science · 📜 History · 🌍 Geography · 🎬 Pop Culture · 💻 Tech
+- Alternating **Multiple Choice** and **Type-In** question formats, freshly drawn and shuffled every game
 - **Streak scoring** — rack up bonuses for consecutive correct answers
 - **Persistent high score** stored with Jetpack DataStore
 - Polished animations: confetti, card shake, green glow, animated score counter
@@ -110,7 +110,7 @@ app/src/main/
     │   ├── AnswerMatching.kt          # Forgiving type-in answer comparison
     │   └── Scoring.kt                 # Points, streak bonus, max score
     ├── data/
-    │   ├── QuestionBank.kt            # 20 trivia questions
+    │   ├── QuestionBank.kt            # 50 trivia questions
     │   └── HighScoreRepository.kt     # DataStore read/write
     ├── viewmodel/
     │   ├── GameViewModel.kt           # Game state & flow (questions, answers, streaks)
