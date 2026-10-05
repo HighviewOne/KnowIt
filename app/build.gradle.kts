@@ -1,6 +1,5 @@
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
 }
 
@@ -16,7 +15,7 @@ val appVersionCode = Regex("""^(\d+)\.(\d+)(?:\.(\d+))?""").find(appVersionName)
 
 android {
     namespace = "com.knowit"
-    compileSdk = 35
+    compileSdk = 37
 
     defaultConfig {
         applicationId = "com.knowit"
@@ -53,10 +52,6 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
-    }
-
-    kotlinOptions {
-        jvmTarget = "17"
     }
 
     buildFeatures {
