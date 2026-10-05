@@ -80,6 +80,10 @@ jobs:
             2. On your Android device: **Settings → Install unknown apps** → enable for your browser/file manager
             3. Open the downloaded APK and tap Install
 
+            Already have KnowIt installed? This installs over it as an update and keeps your high score.
+
             ### Requirements
             Android 8.0 (API 26) or higher
+          # Appends "What's Changed" (PRs merged since the previous tag) below the body.
+          generate_release_notes: true
           files: app/build/outputs/apk/release/knowit-${{ github.ref_name }}.apk
