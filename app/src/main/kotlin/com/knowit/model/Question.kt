@@ -16,6 +16,13 @@ enum class Category(@StringRes val labelRes: Int, val emoji: String) {
     TECH(R.string.category_tech, "💻")
 }
 
+/** How hard a question is for a trivia fan. Existing pub-quiz basics are [EASY]. */
+enum class Difficulty {
+    EASY,
+    MEDIUM,
+    HARD
+}
+
 data class Question(
     val id: Int,
     val type: QuestionType,
@@ -23,5 +30,6 @@ data class Question(
     val questionText: String,
     val correctAnswer: String,
     val options: List<String> = emptyList(),
-    val acceptedAnswers: List<String> = emptyList()
+    val acceptedAnswers: List<String> = emptyList(),
+    val difficulty: Difficulty = Difficulty.EASY
 )

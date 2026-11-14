@@ -1,6 +1,7 @@
 package com.knowit.data
 
 import com.knowit.model.Category
+import com.knowit.model.Difficulty
 import com.knowit.model.Question
 import com.knowit.model.QuestionType
 
@@ -82,7 +83,8 @@ val questionBank: List<Question> = listOf(
         category = Category.POP_CULTURE,
         questionText = "Which movie won the first Academy Award for Best Picture?",
         correctAnswer = "Wings",
-        options = listOf("Wings", "Sunrise", "The Jazz Singer", "7th Heaven")
+        options = listOf("Wings", "Sunrise", "The Jazz Singer", "7th Heaven"),
+        difficulty = Difficulty.HARD
     ),
     // Pair 5: Tech TypeIn
     Question(
@@ -108,7 +110,8 @@ val questionBank: List<Question> = listOf(
         category = Category.HISTORY,
         questionText = "What ancient wonder was located in Alexandria, Egypt?",
         correctAnswer = "Lighthouse",
-        acceptedAnswers = listOf("lighthouse of alexandria", "pharos")
+        acceptedAnswers = listOf("lighthouse of alexandria", "pharos"),
+        difficulty = Difficulty.MEDIUM
     ),
     // Pair 7: Geography MC
     Question(
@@ -117,7 +120,8 @@ val questionBank: List<Question> = listOf(
         category = Category.GEOGRAPHY,
         questionText = "Which country has the most natural lakes?",
         correctAnswer = "Canada",
-        options = listOf("Canada", "Russia", "USA", "Finland")
+        options = listOf("Canada", "Russia", "USA", "Finland"),
+        difficulty = Difficulty.MEDIUM
     ),
     // Pair 7: Pop Culture TypeIn
     Question(
@@ -144,7 +148,8 @@ val questionBank: List<Question> = listOf(
         category = Category.SCIENCE,
         questionText = "What is the speed of light in km/s (approximate whole number)?",
         correctAnswer = "300000",
-        acceptedAnswers = listOf("299792")
+        acceptedAnswers = listOf("299792"),
+        difficulty = Difficulty.MEDIUM
     ),
     // Pair 9: History MC
     Question(
@@ -153,7 +158,8 @@ val questionBank: List<Question> = listOf(
         category = Category.HISTORY,
         questionText = "Julius Caesar was dictator of which ancient state?",
         correctAnswer = "Roman Republic",
-        options = listOf("Roman Republic", "Carthage", "Ptolemaic Egypt", "Macedon")
+        options = listOf("Roman Republic", "Carthage", "Ptolemaic Egypt", "Macedon"),
+        difficulty = Difficulty.MEDIUM
     ),
     // Pair 9: Geography TypeIn
     Question(
@@ -417,5 +423,359 @@ val questionBank: List<Question> = listOf(
         questionText = "Alongside HTML, which language is used to style the look of web pages?",
         correctAnswer = "CSS",
         acceptedAnswers = listOf("cascading style sheets")
+    ),
+    // ── Science (added 2026-11) ──
+    Question(
+        id = 51,
+        type = QuestionType.MULTIPLE_CHOICE,
+        category = Category.SCIENCE,
+        questionText = "What is the most abundant gas in Earth's atmosphere?",
+        correctAnswer = "Nitrogen",
+        options = listOf("Nitrogen", "Oxygen", "Argon", "Carbon dioxide"),
+        difficulty = Difficulty.MEDIUM
+    ),
+    Question(
+        id = 52,
+        type = QuestionType.MULTIPLE_CHOICE,
+        category = Category.SCIENCE,
+        questionText = "In DNA, which base pairs with adenine?",
+        correctAnswer = "Thymine",
+        options = listOf("Thymine", "Uracil", "Guanine", "Cytosine"),
+        difficulty = Difficulty.MEDIUM
+    ),
+    Question(
+        id = 53,
+        type = QuestionType.MULTIPLE_CHOICE,
+        category = Category.SCIENCE,
+        questionText = "Which metal is liquid at room temperature?",
+        correctAnswer = "Mercury",
+        options = listOf("Mercury", "Gallium", "Tin", "Lead"),
+        difficulty = Difficulty.MEDIUM
+    ),
+    Question(
+        id = 54,
+        type = QuestionType.MULTIPLE_CHOICE,
+        category = Category.SCIENCE,
+        questionText = "What is the SI unit of electrical resistance?",
+        correctAnswer = "Ohm",
+        options = listOf("Ohm", "Volt", "Ampere", "Farad"),
+        difficulty = Difficulty.MEDIUM
+    ),
+    Question(
+        id = 55,
+        type = QuestionType.MULTIPLE_CHOICE,
+        category = Category.SCIENCE,
+        questionText = "Which planet has the shortest day, spinning once in about 10 hours?",
+        correctAnswer = "Jupiter",
+        options = listOf("Jupiter", "Saturn", "Earth", "Neptune"),
+        difficulty = Difficulty.HARD
+    ),
+    Question(
+        id = 56,
+        type = QuestionType.MULTIPLE_CHOICE,
+        category = Category.SCIENCE,
+        questionText = "What is the half-life of carbon-14?",
+        correctAnswer = "5,730 years",
+        options = listOf("5,730 years", "1,600 years", "24,100 years", "50,000 years"),
+        difficulty = Difficulty.HARD
+    ),
+    Question(
+        id = 57,
+        type = QuestionType.MULTIPLE_CHOICE,
+        category = Category.SCIENCE,
+        questionText = "Which astronomer formulated the three laws of planetary motion?",
+        correctAnswer = "Johannes Kepler",
+        options = listOf("Johannes Kepler", "Isaac Newton", "Galileo Galilei", "Nicolaus Copernicus"),
+        difficulty = Difficulty.MEDIUM
+    ),
+    Question(
+        id = 58,
+        type = QuestionType.MULTIPLE_CHOICE,
+        category = Category.SCIENCE,
+        questionText = "What is the most abundant element in Earth's crust by mass?",
+        correctAnswer = "Oxygen",
+        options = listOf("Oxygen", "Silicon", "Aluminum", "Iron"),
+        difficulty = Difficulty.HARD
+    ),
+    Question(
+        id = 59,
+        type = QuestionType.MULTIPLE_CHOICE,
+        category = Category.SCIENCE,
+        questionText = "Which part of the brain coordinates balance and fine movement?",
+        correctAnswer = "Cerebellum",
+        options = listOf("Cerebellum", "Medulla oblongata", "Hypothalamus", "Frontal lobe"),
+        difficulty = Difficulty.MEDIUM
+    ),
+    Question(
+        id = 60,
+        type = QuestionType.MULTIPLE_CHOICE,
+        category = Category.SCIENCE,
+        questionText = "Which subatomic particle did J. J. Thomson discover in 1897?",
+        correctAnswer = "Electron",
+        options = listOf("Electron", "Proton", "Neutron", "Positron"),
+        difficulty = Difficulty.MEDIUM
+    ),
+    Question(
+        id = 61,
+        type = QuestionType.TYPE_IN,
+        category = Category.SCIENCE,
+        questionText = "What is the chemical symbol for potassium?",
+        correctAnswer = "K",
+        difficulty = Difficulty.MEDIUM
+    ),
+    Question(
+        id = 62,
+        type = QuestionType.TYPE_IN,
+        category = Category.SCIENCE,
+        questionText = "What is the largest organ of the human body?",
+        correctAnswer = "Skin",
+        difficulty = Difficulty.EASY
+    ),
+    Question(
+        id = 63,
+        type = QuestionType.TYPE_IN,
+        category = Category.SCIENCE,
+        questionText = "What is the name for the point in a planet's orbit where it is closest to the Sun?",
+        correctAnswer = "Perihelion",
+        difficulty = Difficulty.HARD
+    ),
+    Question(
+        id = 64,
+        type = QuestionType.TYPE_IN,
+        category = Category.SCIENCE,
+        questionText = "What is the hardest substance in the human body?",
+        correctAnswer = "Tooth enamel",
+        acceptedAnswers = listOf("enamel"),
+        difficulty = Difficulty.MEDIUM
+    ),
+    Question(
+        id = 65,
+        type = QuestionType.TYPE_IN,
+        category = Category.SCIENCE,
+        questionText = "Which element has the chemical symbol W?",
+        correctAnswer = "Tungsten",
+        acceptedAnswers = listOf("wolfram"),
+        difficulty = Difficulty.HARD
+    ),
+    Question(
+        id = 66,
+        type = QuestionType.TYPE_IN,
+        category = Category.SCIENCE,
+        questionText = "How many chromosomes are in a typical human body cell?",
+        correctAnswer = "46",
+        acceptedAnswers = listOf("forty six", "23 pairs"),
+        difficulty = Difficulty.MEDIUM
+    ),
+    Question(
+        id = 67,
+        type = QuestionType.TYPE_IN,
+        category = Category.SCIENCE,
+        questionText = "What is the nearest large spiral galaxy to the Milky Way?",
+        correctAnswer = "Andromeda",
+        acceptedAnswers = listOf("andromeda galaxy", "m31", "messier 31"),
+        difficulty = Difficulty.MEDIUM
+    ),
+    Question(
+        id = 68,
+        type = QuestionType.TYPE_IN,
+        category = Category.SCIENCE,
+        questionText = "Which element makes up most of the Sun's mass?",
+        correctAnswer = "Hydrogen",
+        difficulty = Difficulty.MEDIUM
+    ),
+    Question(
+        id = 69,
+        type = QuestionType.TYPE_IN,
+        category = Category.SCIENCE,
+        questionText = "What protein in red blood cells carries oxygen?",
+        correctAnswer = "Hemoglobin",
+        acceptedAnswers = listOf("haemoglobin"),
+        difficulty = Difficulty.MEDIUM
+    ),
+    Question(
+        id = 70,
+        type = QuestionType.TYPE_IN,
+        category = Category.SCIENCE,
+        questionText = "What is the boundary around a black hole, beyond which nothing can escape, called?",
+        correctAnswer = "Event horizon",
+        difficulty = Difficulty.HARD
+    ),
+    // ── History (added 2026-11) ──
+    Question(
+        id = 71,
+        type = QuestionType.MULTIPLE_CHOICE,
+        category = Category.HISTORY,
+        questionText = "Suleiman the Magnificent ruled which empire?",
+        correctAnswer = "Ottoman Empire",
+        options = listOf("Ottoman Empire", "Mughal Empire", "Safavid Empire", "Byzantine Empire"),
+        difficulty = Difficulty.MEDIUM
+    ),
+    Question(
+        id = 72,
+        type = QuestionType.MULTIPLE_CHOICE,
+        category = Category.HISTORY,
+        questionText = "In what year was Magna Carta sealed by King John?",
+        correctAnswer = "1215",
+        options = listOf("1215", "1066", "1314", "1381"),
+        difficulty = Difficulty.MEDIUM
+    ),
+    Question(
+        id = 73,
+        type = QuestionType.MULTIPLE_CHOICE,
+        category = Category.HISTORY,
+        questionText = "At which 1815 battle was Napoleon finally defeated?",
+        correctAnswer = "Waterloo",
+        options = listOf("Waterloo", "Austerlitz", "Leipzig", "Trafalgar"),
+        difficulty = Difficulty.MEDIUM
+    ),
+    Question(
+        id = 74,
+        type = QuestionType.MULTIPLE_CHOICE,
+        category = Category.HISTORY,
+        questionText = "Who was the first emperor of a unified China?",
+        correctAnswer = "Qin Shi Huang",
+        options = listOf("Qin Shi Huang", "Kublai Khan", "Liu Bang", "Wu Zetian"),
+        difficulty = Difficulty.MEDIUM
+    ),
+    Question(
+        id = 75,
+        type = QuestionType.MULTIPLE_CHOICE,
+        category = Category.HISTORY,
+        questionText = "Which treaty ended World War I between the Allies and Germany?",
+        correctAnswer = "Treaty of Versailles",
+        options = listOf("Treaty of Versailles", "Treaty of Trianon", "Treaty of Brest-Litovsk", "Peace of Westphalia"),
+        difficulty = Difficulty.MEDIUM
+    ),
+    Question(
+        id = 76,
+        type = QuestionType.MULTIPLE_CHOICE,
+        category = Category.HISTORY,
+        questionText = "Whose nearly intact tomb did Howard Carter discover in 1922?",
+        correctAnswer = "Tutankhamun",
+        options = listOf("Tutankhamun", "Ramesses II", "Khufu", "Akhenaten"),
+        difficulty = Difficulty.MEDIUM
+    ),
+    Question(
+        id = 77,
+        type = QuestionType.MULTIPLE_CHOICE,
+        category = Category.HISTORY,
+        questionText = "How many years did the Hundred Years' War (1337–1453) actually last?",
+        correctAnswer = "116",
+        options = listOf("116", "100", "99", "130"),
+        difficulty = Difficulty.HARD
+    ),
+    Question(
+        id = 78,
+        type = QuestionType.MULTIPLE_CHOICE,
+        category = Category.HISTORY,
+        questionText = "What was the capital of the Byzantine Empire?",
+        correctAnswer = "Constantinople",
+        options = listOf("Constantinople", "Rome", "Athens", "Antioch"),
+        difficulty = Difficulty.MEDIUM
+    ),
+    Question(
+        id = 79,
+        type = QuestionType.MULTIPLE_CHOICE,
+        category = Category.HISTORY,
+        questionText = "Who was the British prime minister when World War II began in 1939?",
+        correctAnswer = "Neville Chamberlain",
+        options = listOf("Neville Chamberlain", "Winston Churchill", "Clement Attlee", "Stanley Baldwin"),
+        difficulty = Difficulty.MEDIUM
+    ),
+    Question(
+        id = 80,
+        type = QuestionType.MULTIPLE_CHOICE,
+        category = Category.HISTORY,
+        questionText = "Which Mongol ruler founded China's Yuan dynasty?",
+        correctAnswer = "Kublai Khan",
+        options = listOf("Kublai Khan", "Genghis Khan", "Ögedei Khan", "Timur"),
+        difficulty = Difficulty.HARD
+    ),
+    Question(
+        id = 81,
+        type = QuestionType.TYPE_IN,
+        category = Category.HISTORY,
+        questionText = "Name a Roman town buried by the eruption of Mount Vesuvius in AD 79.",
+        correctAnswer = "Pompeii",
+        acceptedAnswers = listOf("herculaneum", "stabiae", "oplontis"),
+        difficulty = Difficulty.EASY
+    ),
+    Question(
+        id = 82,
+        type = QuestionType.TYPE_IN,
+        category = Category.HISTORY,
+        questionText = "In what year was the US Declaration of Independence adopted?",
+        correctAnswer = "1776",
+        difficulty = Difficulty.EASY
+    ),
+    Question(
+        id = 83,
+        type = QuestionType.TYPE_IN,
+        category = Category.HISTORY,
+        questionText = "In what year was the Battle of Hastings fought?",
+        correctAnswer = "1066",
+        difficulty = Difficulty.MEDIUM
+    ),
+    Question(
+        id = 84,
+        type = QuestionType.TYPE_IN,
+        category = Category.HISTORY,
+        questionText = "Which queen of France was executed by guillotine in 1793?",
+        correctAnswer = "Marie Antoinette",
+        acceptedAnswers = listOf("antoinette", "queen marie antoinette"),
+        difficulty = Difficulty.MEDIUM
+    ),
+    Question(
+        id = 85,
+        type = QuestionType.TYPE_IN,
+        category = Category.HISTORY,
+        questionText = "What was the name of the first artificial satellite, launched by the Soviet Union in 1957?",
+        correctAnswer = "Sputnik",
+        acceptedAnswers = listOf("sputnik 1"),
+        difficulty = Difficulty.MEDIUM
+    ),
+    Question(
+        id = 86,
+        type = QuestionType.TYPE_IN,
+        category = Category.HISTORY,
+        questionText = "Which Carthaginian general crossed the Alps with war elephants to invade Italy?",
+        correctAnswer = "Hannibal",
+        acceptedAnswers = listOf("hannibal barca"),
+        difficulty = Difficulty.MEDIUM
+    ),
+    Question(
+        id = 87,
+        type = QuestionType.TYPE_IN,
+        category = Category.HISTORY,
+        questionText = "In what year did the storming of the Bastille take place?",
+        correctAnswer = "1789",
+        difficulty = Difficulty.MEDIUM
+    ),
+    Question(
+        id = 88,
+        type = QuestionType.TYPE_IN,
+        category = Category.HISTORY,
+        questionText = "Who was the last tsar of Russia?",
+        correctAnswer = "Nicholas II",
+        acceptedAnswers = listOf("tsar nicholas ii", "czar nicholas ii", "nicholas 2", "nicholas the second", "tsar nicholas", "nicholas"),
+        difficulty = Difficulty.MEDIUM
+    ),
+    Question(
+        id = 89,
+        type = QuestionType.TYPE_IN,
+        category = Category.HISTORY,
+        questionText = "Which English king had six wives?",
+        correctAnswer = "Henry VIII",
+        acceptedAnswers = listOf("king henry viii", "henry 8", "henry the eighth", "henry"),
+        difficulty = Difficulty.EASY
+    ),
+    Question(
+        id = 90,
+        type = QuestionType.TYPE_IN,
+        category = Category.HISTORY,
+        questionText = "In what year is the Western Roman Empire traditionally said to have fallen?",
+        correctAnswer = "476",
+        acceptedAnswers = listOf("476 ad", "ad 476"),
+        difficulty = Difficulty.HARD
     )
 )
