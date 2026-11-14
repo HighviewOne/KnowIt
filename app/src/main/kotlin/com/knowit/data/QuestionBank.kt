@@ -1199,5 +1199,576 @@ val questionBank: List<Question> = listOf(
         questionText = "Which Sun Microsystems language promised 'write once, run anywhere'?",
         correctAnswer = "Java",
         difficulty = Difficulty.MEDIUM
+    ),
+    // ── Science (batch 3, 2026-11) ──
+    Question(
+        id = 139,
+        type = QuestionType.MULTIPLE_CHOICE,
+        category = Category.SCIENCE,
+        questionText = "Which vitamin does your skin make when exposed to sunlight?",
+        correctAnswer = "Vitamin D",
+        options = listOf("Vitamin D", "Vitamin A", "Vitamin C", "Vitamin K"),
+        difficulty = Difficulty.EASY
+    ),
+    Question(
+        id = 140,
+        type = QuestionType.MULTIPLE_CHOICE,
+        category = Category.SCIENCE,
+        questionText = "What is absolute zero in degrees Celsius?",
+        correctAnswer = "−273.15 °C",
+        options = listOf("−273.15 °C", "−459.67 °C", "−300 °C", "−173.15 °C"),
+        difficulty = Difficulty.MEDIUM
+    ),
+    Question(
+        id = 141,
+        type = QuestionType.MULTIPLE_CHOICE,
+        category = Category.SCIENCE,
+        questionText = "Which noble gas is the most abundant in Earth's atmosphere?",
+        correctAnswer = "Argon",
+        options = listOf("Argon", "Neon", "Helium", "Krypton"),
+        difficulty = Difficulty.HARD
+    ),
+    Question(
+        id = 142,
+        type = QuestionType.MULTIPLE_CHOICE,
+        category = Category.SCIENCE,
+        questionText = "Which blood type is the universal donor for red blood cells?",
+        correctAnswer = "O negative",
+        options = listOf("O negative", "AB positive", "A negative", "B positive"),
+        difficulty = Difficulty.MEDIUM
+    ),
+    Question(
+        id = 143,
+        type = QuestionType.MULTIPLE_CHOICE,
+        category = Category.SCIENCE,
+        questionText = "What is it called when a solid turns directly into a gas?",
+        correctAnswer = "Sublimation",
+        options = listOf("Sublimation", "Deposition", "Evaporation", "Condensation"),
+        difficulty = Difficulty.MEDIUM
+    ),
+    Question(
+        id = 144,
+        type = QuestionType.MULTIPLE_CHOICE,
+        category = Category.SCIENCE,
+        questionText = "Which is the hottest planet in our solar system?",
+        correctAnswer = "Venus",
+        options = listOf("Venus", "Mercury", "Mars", "Jupiter"),
+        difficulty = Difficulty.MEDIUM
+    ),
+    Question(
+        id = 145,
+        type = QuestionType.MULTIPLE_CHOICE,
+        category = Category.SCIENCE,
+        questionText = "Roughly how long does sunlight take to reach Earth?",
+        correctAnswer = "About 8 minutes",
+        options = listOf("About 8 minutes", "About 8 seconds", "About 80 minutes", "About 8 hours"),
+        difficulty = Difficulty.MEDIUM
+    ),
+    Question(
+        id = 146,
+        type = QuestionType.TYPE_IN,
+        category = Category.SCIENCE,
+        questionText = "What is the chemical symbol for sodium?",
+        correctAnswer = "Na",
+        difficulty = Difficulty.MEDIUM
+    ),
+    Question(
+        id = 147,
+        type = QuestionType.TYPE_IN,
+        category = Category.SCIENCE,
+        questionText = "What is the most electronegative element?",
+        correctAnswer = "Fluorine",
+        difficulty = Difficulty.HARD
+    ),
+    Question(
+        id = 148,
+        type = QuestionType.TYPE_IN,
+        category = Category.SCIENCE,
+        questionText = "What are animals that eat only plants called?",
+        correctAnswer = "Herbivores",
+        acceptedAnswers = listOf("herbivore"),
+        difficulty = Difficulty.EASY
+    ),
+    Question(
+        id = 149,
+        type = QuestionType.TYPE_IN,
+        category = Category.SCIENCE,
+        questionText = "What is the name of the tallest volcano in the solar system, found on Mars?",
+        correctAnswer = "Olympus Mons",
+        acceptedAnswers = listOf("olympus"),
+        difficulty = Difficulty.HARD
+    ),
+    Question(
+        id = 150,
+        type = QuestionType.TYPE_IN,
+        category = Category.SCIENCE,
+        questionText = "Who proposed evolution by natural selection in 'On the Origin of Species'?",
+        correctAnswer = "Charles Darwin",
+        acceptedAnswers = listOf("darwin"),
+        difficulty = Difficulty.EASY
+    ),
+    Question(
+        id = 151,
+        type = QuestionType.TYPE_IN,
+        category = Category.SCIENCE,
+        questionText = "How many hearts does an octopus have?",
+        correctAnswer = "3",
+        acceptedAnswers = listOf("three"),
+        difficulty = Difficulty.MEDIUM
+    ),
+    // ── History (batch 3, 2026-11) ──
+    Question(
+        id = 152,
+        type = QuestionType.MULTIPLE_CHOICE,
+        category = Category.HISTORY,
+        questionText = "Who was the first woman to win a Nobel Prize?",
+        correctAnswer = "Marie Curie",
+        options = listOf("Marie Curie", "Bertha von Suttner", "Jane Addams", "Irène Joliot-Curie"),
+        difficulty = Difficulty.MEDIUM
+    ),
+    Question(
+        id = 153,
+        type = QuestionType.MULTIPLE_CHOICE,
+        category = Category.HISTORY,
+        questionText = "Mansa Musa ruled which West African empire?",
+        correctAnswer = "Mali Empire",
+        options = listOf("Mali Empire", "Songhai Empire", "Ghana Empire", "Benin Empire"),
+        difficulty = Difficulty.HARD
+    ),
+    Question(
+        id = 154,
+        type = QuestionType.MULTIPLE_CHOICE,
+        category = Category.HISTORY,
+        questionText = "In what year did the American Civil War begin?",
+        correctAnswer = "1861",
+        options = listOf("1861", "1859", "1863", "1865"),
+        difficulty = Difficulty.MEDIUM
+    ),
+    Question(
+        id = 155,
+        type = QuestionType.MULTIPLE_CHOICE,
+        category = Category.HISTORY,
+        questionText = "Whose expedition made the first circumnavigation of the globe (1519–1522)?",
+        correctAnswer = "Ferdinand Magellan",
+        options = listOf("Ferdinand Magellan", "Francis Drake", "Vasco da Gama", "James Cook"),
+        difficulty = Difficulty.MEDIUM
+    ),
+    Question(
+        id = 156,
+        type = QuestionType.MULTIPLE_CHOICE,
+        category = Category.HISTORY,
+        questionText = "The Rosetta Stone helped scholars decipher which writing system?",
+        correctAnswer = "Egyptian hieroglyphs",
+        options = listOf("Egyptian hieroglyphs", "Cuneiform", "Linear B", "Maya glyphs"),
+        difficulty = Difficulty.MEDIUM
+    ),
+    Question(
+        id = 157,
+        type = QuestionType.MULTIPLE_CHOICE,
+        category = Category.HISTORY,
+        questionText = "Which dynasty built most of the Great Wall of China that stands today?",
+        correctAnswer = "Ming",
+        options = listOf("Ming", "Qin", "Han", "Tang"),
+        difficulty = Difficulty.HARD
+    ),
+    Question(
+        id = 158,
+        type = QuestionType.TYPE_IN,
+        category = Category.HISTORY,
+        questionText = "Who co-wrote 'The Communist Manifesto' with Friedrich Engels?",
+        correctAnswer = "Karl Marx",
+        acceptedAnswers = listOf("marx"),
+        difficulty = Difficulty.MEDIUM
+    ),
+    Question(
+        id = 159,
+        type = QuestionType.TYPE_IN,
+        category = Category.HISTORY,
+        questionText = "In what year did the Soviet Union dissolve?",
+        correctAnswer = "1991",
+        difficulty = Difficulty.MEDIUM
+    ),
+    Question(
+        id = 160,
+        type = QuestionType.TYPE_IN,
+        category = Category.HISTORY,
+        questionText = "What was the name of the ship that carried the Pilgrims to America in 1620?",
+        correctAnswer = "Mayflower",
+        difficulty = Difficulty.EASY
+    ),
+    Question(
+        id = 161,
+        type = QuestionType.TYPE_IN,
+        category = Category.HISTORY,
+        questionText = "Which Indian independence leader led the Salt March of 1930?",
+        correctAnswer = "Mahatma Gandhi",
+        acceptedAnswers = listOf("gandhi", "mohandas gandhi", "mohandas karamchand gandhi"),
+        difficulty = Difficulty.MEDIUM
+    ),
+    Question(
+        id = 162,
+        type = QuestionType.TYPE_IN,
+        category = Category.HISTORY,
+        questionText = "Which Greek city-state, famous for its warriors, defeated Athens in the Peloponnesian War?",
+        correctAnswer = "Sparta",
+        acceptedAnswers = listOf("lacedaemon"),
+        difficulty = Difficulty.MEDIUM
+    ),
+    Question(
+        id = 163,
+        type = QuestionType.TYPE_IN,
+        category = Category.HISTORY,
+        questionText = "In what year did the Spanish Armada sail against England?",
+        correctAnswer = "1588",
+        difficulty = Difficulty.HARD
+    ),
+    Question(
+        id = 164,
+        type = QuestionType.TYPE_IN,
+        category = Category.HISTORY,
+        questionText = "Who was the first female prime minister of the United Kingdom?",
+        correctAnswer = "Margaret Thatcher",
+        acceptedAnswers = listOf("thatcher"),
+        difficulty = Difficulty.EASY
+    ),
+    // ── Geography (batch 3, 2026-11) ──
+    Question(
+        id = 165,
+        type = QuestionType.MULTIPLE_CHOICE,
+        category = Category.GEOGRAPHY,
+        questionText = "What is the capital of Brazil?",
+        correctAnswer = "Brasília",
+        options = listOf("Brasília", "Rio de Janeiro", "São Paulo", "Salvador"),
+        difficulty = Difficulty.MEDIUM
+    ),
+    Question(
+        id = 166,
+        type = QuestionType.MULTIPLE_CHOICE,
+        category = Category.GEOGRAPHY,
+        questionText = "Mount Kilimanjaro is in which country?",
+        correctAnswer = "Tanzania",
+        options = listOf("Tanzania", "Kenya", "Uganda", "Ethiopia"),
+        difficulty = Difficulty.MEDIUM
+    ),
+    Question(
+        id = 167,
+        type = QuestionType.MULTIPLE_CHOICE,
+        category = Category.GEOGRAPHY,
+        questionText = "Which river discharges the most water into the sea?",
+        correctAnswer = "Amazon",
+        options = listOf("Amazon", "Congo", "Nile", "Yangtze"),
+        difficulty = Difficulty.MEDIUM
+    ),
+    Question(
+        id = 168,
+        type = QuestionType.MULTIPLE_CHOICE,
+        category = Category.GEOGRAPHY,
+        questionText = "What is the capital of Myanmar?",
+        correctAnswer = "Naypyidaw",
+        options = listOf("Naypyidaw", "Yangon", "Mandalay", "Bangkok"),
+        difficulty = Difficulty.HARD
+    ),
+    Question(
+        id = 169,
+        type = QuestionType.MULTIPLE_CHOICE,
+        category = Category.GEOGRAPHY,
+        questionText = "Which two countries share the world's longest international border?",
+        correctAnswer = "Canada and the USA",
+        options = listOf("Canada and the USA", "Russia and Kazakhstan", "Chile and Argentina", "China and Mongolia"),
+        difficulty = Difficulty.MEDIUM
+    ),
+    Question(
+        id = 170,
+        type = QuestionType.MULTIPLE_CHOICE,
+        category = Category.GEOGRAPHY,
+        questionText = "Not counting Australia, what is the largest island in the world?",
+        correctAnswer = "Greenland",
+        options = listOf("Greenland", "New Guinea", "Borneo", "Madagascar"),
+        difficulty = Difficulty.MEDIUM
+    ),
+    Question(
+        id = 171,
+        type = QuestionType.MULTIPLE_CHOICE,
+        category = Category.GEOGRAPHY,
+        questionText = "What is the driest non-polar desert in the world?",
+        correctAnswer = "Atacama",
+        options = listOf("Atacama", "Sahara", "Gobi", "Namib"),
+        difficulty = Difficulty.HARD
+    ),
+    Question(
+        id = 172,
+        type = QuestionType.TYPE_IN,
+        category = Category.GEOGRAPHY,
+        questionText = "What is the capital of Egypt?",
+        correctAnswer = "Cairo",
+        difficulty = Difficulty.EASY
+    ),
+    Question(
+        id = 173,
+        type = QuestionType.TYPE_IN,
+        category = Category.GEOGRAPHY,
+        questionText = "What is the capital of Argentina?",
+        correctAnswer = "Buenos Aires",
+        difficulty = Difficulty.MEDIUM
+    ),
+    Question(
+        id = 174,
+        type = QuestionType.TYPE_IN,
+        category = Category.GEOGRAPHY,
+        questionText = "Which European country is shaped like a boot?",
+        correctAnswer = "Italy",
+        difficulty = Difficulty.EASY
+    ),
+    Question(
+        id = 175,
+        type = QuestionType.TYPE_IN,
+        category = Category.GEOGRAPHY,
+        questionText = "What is the largest country in Africa by area?",
+        correctAnswer = "Algeria",
+        difficulty = Difficulty.HARD
+    ),
+    Question(
+        id = 176,
+        type = QuestionType.TYPE_IN,
+        category = Category.GEOGRAPHY,
+        questionText = "What is the capital of South Korea?",
+        correctAnswer = "Seoul",
+        difficulty = Difficulty.EASY
+    ),
+    Question(
+        id = 177,
+        type = QuestionType.TYPE_IN,
+        category = Category.GEOGRAPHY,
+        questionText = "In which country is the ancient rock-cut city of Petra?",
+        correctAnswer = "Jordan",
+        difficulty = Difficulty.MEDIUM
+    ),
+    // ── Pop Culture (batch 3, 2026-11) ──
+    Question(
+        id = 178,
+        type = QuestionType.MULTIPLE_CHOICE,
+        category = Category.POP_CULTURE,
+        questionText = "Who carved the marble statue of David completed in 1504?",
+        correctAnswer = "Michelangelo",
+        options = listOf("Michelangelo", "Donatello", "Bernini", "Rodin"),
+        difficulty = Difficulty.MEDIUM
+    ),
+    Question(
+        id = 179,
+        type = QuestionType.MULTIPLE_CHOICE,
+        category = Category.POP_CULTURE,
+        questionText = "Which composer wrote the opera cycle 'The Ring of the Nibelung'?",
+        correctAnswer = "Richard Wagner",
+        options = listOf("Richard Wagner", "Giuseppe Verdi", "Giacomo Puccini", "Wolfgang Amadeus Mozart"),
+        difficulty = Difficulty.MEDIUM
+    ),
+    Question(
+        id = 180,
+        type = QuestionType.MULTIPLE_CHOICE,
+        category = Category.POP_CULTURE,
+        questionText = "Which Beatles album includes 'Here Comes the Sun'?",
+        correctAnswer = "Abbey Road",
+        options = listOf("Abbey Road", "Revolver", "Let It Be", "Rubber Soul"),
+        difficulty = Difficulty.MEDIUM
+    ),
+    Question(
+        id = 181,
+        type = QuestionType.MULTIPLE_CHOICE,
+        category = Category.POP_CULTURE,
+        questionText = "Who directed the 1968 film '2001: A Space Odyssey'?",
+        correctAnswer = "Stanley Kubrick",
+        options = listOf("Stanley Kubrick", "Steven Spielberg", "George Lucas", "Ridley Scott"),
+        difficulty = Difficulty.MEDIUM
+    ),
+    Question(
+        id = 182,
+        type = QuestionType.MULTIPLE_CHOICE,
+        category = Category.POP_CULTURE,
+        questionText = "Which author created the detective Hercule Poirot?",
+        correctAnswer = "Agatha Christie",
+        options = listOf("Agatha Christie", "Arthur Conan Doyle", "Dorothy L. Sayers", "Raymond Chandler"),
+        difficulty = Difficulty.MEDIUM
+    ),
+    Question(
+        id = 183,
+        type = QuestionType.MULTIPLE_CHOICE,
+        category = Category.POP_CULTURE,
+        questionText = "Which Shakespeare play contains the line 'To be, or not to be'?",
+        correctAnswer = "Hamlet",
+        options = listOf("Hamlet", "Macbeth", "King Lear", "Othello"),
+        difficulty = Difficulty.EASY
+    ),
+    Question(
+        id = 184,
+        type = QuestionType.TYPE_IN,
+        category = Category.POP_CULTURE,
+        questionText = "Who is Sherlock Holmes's archenemy?",
+        correctAnswer = "Professor Moriarty",
+        acceptedAnswers = listOf("moriarty", "james moriarty"),
+        difficulty = Difficulty.MEDIUM
+    ),
+    Question(
+        id = 185,
+        type = QuestionType.TYPE_IN,
+        category = Category.POP_CULTURE,
+        questionText = "How many players does each team have on the field in a soccer match?",
+        correctAnswer = "11",
+        acceptedAnswers = listOf("eleven"),
+        difficulty = Difficulty.EASY
+    ),
+    Question(
+        id = 186,
+        type = QuestionType.TYPE_IN,
+        category = Category.POP_CULTURE,
+        questionText = "Who wrote the novel '1984'?",
+        correctAnswer = "George Orwell",
+        acceptedAnswers = listOf("orwell", "eric blair", "eric arthur blair"),
+        difficulty = Difficulty.EASY
+    ),
+    Question(
+        id = 187,
+        type = QuestionType.TYPE_IN,
+        category = Category.POP_CULTURE,
+        questionText = "Which Italian composer wrote the operas 'La Bohème' and 'Tosca'?",
+        correctAnswer = "Giacomo Puccini",
+        acceptedAnswers = listOf("puccini"),
+        difficulty = Difficulty.HARD
+    ),
+    Question(
+        id = 188,
+        type = QuestionType.TYPE_IN,
+        category = Category.POP_CULTURE,
+        questionText = "In which fictional town do The Simpsons live?",
+        correctAnswer = "Springfield",
+        difficulty = Difficulty.EASY
+    ),
+    Question(
+        id = 189,
+        type = QuestionType.TYPE_IN,
+        category = Category.POP_CULTURE,
+        questionText = "In Greek mythology, what is the name of the winged horse?",
+        correctAnswer = "Pegasus",
+        difficulty = Difficulty.MEDIUM
+    ),
+    Question(
+        id = 190,
+        type = QuestionType.TYPE_IN,
+        category = Category.POP_CULTURE,
+        questionText = "Who wrote 'Pride and Prejudice'?",
+        correctAnswer = "Jane Austen",
+        acceptedAnswers = listOf("austen"),
+        difficulty = Difficulty.EASY
+    ),
+    // ── Tech (batch 3, 2026-11) ──
+    Question(
+        id = 191,
+        type = QuestionType.MULTIPLE_CHOICE,
+        category = Category.TECH,
+        questionText = "Wi-Fi is based on which family of IEEE standards?",
+        correctAnswer = "802.11",
+        options = listOf("802.11", "802.3", "802.15", "1394"),
+        difficulty = Difficulty.HARD
+    ),
+    Question(
+        id = 192,
+        type = QuestionType.MULTIPLE_CHOICE,
+        category = Category.TECH,
+        questionText = "Which company makes the PlayStation?",
+        correctAnswer = "Sony",
+        options = listOf("Sony", "Nintendo", "Sega", "Microsoft"),
+        difficulty = Difficulty.EASY
+    ),
+    Question(
+        id = 193,
+        type = QuestionType.MULTIPLE_CHOICE,
+        category = Category.TECH,
+        questionText = "Which programming language did Bjarne Stroustrup create?",
+        correctAnswer = "C++",
+        options = listOf("C++", "C", "Java", "Rust"),
+        difficulty = Difficulty.MEDIUM
+    ),
+    Question(
+        id = 194,
+        type = QuestionType.MULTIPLE_CHOICE,
+        category = Category.TECH,
+        questionText = "What does 'DNS' stand for?",
+        correctAnswer = "Domain Name System",
+        options = listOf("Domain Name System", "Digital Network Service", "Domain Network Server", "Data Name System"),
+        difficulty = Difficulty.MEDIUM
+    ),
+    Question(
+        id = 195,
+        type = QuestionType.MULTIPLE_CHOICE,
+        category = Category.TECH,
+        questionText = "In which decade did Ray Tomlinson send the first email between networked computers?",
+        correctAnswer = "1970s",
+        options = listOf("1970s", "1960s", "1980s", "1990s"),
+        difficulty = Difficulty.MEDIUM
+    ),
+    Question(
+        id = 196,
+        type = QuestionType.MULTIPLE_CHOICE,
+        category = Category.TECH,
+        questionText = "Larry Page and Sergey Brin founded which company?",
+        correctAnswer = "Google",
+        options = listOf("Google", "Yahoo", "Microsoft", "Amazon"),
+        difficulty = Difficulty.EASY
+    ),
+    Question(
+        id = 197,
+        type = QuestionType.MULTIPLE_CHOICE,
+        category = Category.TECH,
+        questionText = "What does 'GIF' stand for?",
+        correctAnswer = "Graphics Interchange Format",
+        options = listOf("Graphics Interchange Format", "Graphic Image File", "General Image Format", "Graphical Interface Format"),
+        difficulty = Difficulty.MEDIUM
+    ),
+    Question(
+        id = 198,
+        type = QuestionType.TYPE_IN,
+        category = Category.TECH,
+        questionText = "What does 'OS' stand for in computing?",
+        correctAnswer = "Operating System",
+        difficulty = Difficulty.EASY
+    ),
+    Question(
+        id = 199,
+        type = QuestionType.TYPE_IN,
+        category = Category.TECH,
+        questionText = "What is the hexadecimal number FF in decimal?",
+        correctAnswer = "255",
+        difficulty = Difficulty.HARD
+    ),
+    Question(
+        id = 200,
+        type = QuestionType.TYPE_IN,
+        category = Category.TECH,
+        questionText = "Which company makes the iPhone?",
+        correctAnswer = "Apple",
+        difficulty = Difficulty.EASY
+    ),
+    Question(
+        id = 201,
+        type = QuestionType.TYPE_IN,
+        category = Category.TECH,
+        questionText = "Which version control system did Linus Torvalds create in 2005?",
+        correctAnswer = "Git",
+        difficulty = Difficulty.MEDIUM
+    ),
+    Question(
+        id = 202,
+        type = QuestionType.TYPE_IN,
+        category = Category.TECH,
+        questionText = "What does 'VPN' stand for?",
+        correctAnswer = "Virtual Private Network",
+        difficulty = Difficulty.MEDIUM
+    ),
+    Question(
+        id = 203,
+        type = QuestionType.TYPE_IN,
+        category = Category.TECH,
+        questionText = "Which IBM computer beat world chess champion Garry Kasparov in 1997?",
+        correctAnswer = "Deep Blue",
+        difficulty = Difficulty.MEDIUM
     )
 )
