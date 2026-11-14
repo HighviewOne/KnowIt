@@ -26,7 +26,7 @@
 
 ## Features
 
-- **20 questions per game**, drawn from a bank of 50 across 5 categories: 🔬 Science · 📜 History · 🌍 Geography · 🎬 Pop Culture · 💻 Tech
+- **20 questions per game**, drawn from a bank of 90 across 5 categories, tagged easy, medium or hard: 🔬 Science · 📜 History · 🌍 Geography · 🎬 Pop Culture · 💻 Tech
 - Alternating **Multiple Choice** and **Type-In** question formats, freshly drawn and shuffled every game
 - **Streak scoring** — rack up bonuses for consecutive correct answers
 - **Persistent high score** stored with Jetpack DataStore
@@ -91,7 +91,7 @@ Requires JDK 17 and the Android SDK (`ANDROID_HOME` or `local.properties`). The 
 ./gradlew testDebugUnitTest
 ```
 
-Unit tests cover the game flow (`GameViewModelTest`), scoring, type-in answer matching, high-score persistence, and question-bank integrity (unique questions, valid multiple-choice options). CI runs them on every push and pull request.
+Unit tests cover the game flow (`GameViewModelTest`), scoring, type-in answer matching, high-score persistence, and question-bank integrity (unique questions, valid multiple-choice options, at least five of each format per category). CI runs them on every push and pull request.
 
 ### Sideload from a release
 
@@ -112,7 +112,7 @@ app/src/main/
     │   ├── AnswerMatching.kt          # Forgiving type-in answer comparison
     │   └── Scoring.kt                 # Points, streak bonus, max score
     ├── data/
-    │   ├── QuestionBank.kt            # 50 trivia questions
+    │   ├── QuestionBank.kt            # 90 trivia questions
     │   └── HighScoreRepository.kt     # DataStore read/write
     ├── viewmodel/
     │   ├── GameViewModel.kt           # Game state & flow (questions, answers, streaks)
