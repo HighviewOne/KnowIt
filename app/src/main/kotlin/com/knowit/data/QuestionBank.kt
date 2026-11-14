@@ -777,5 +777,427 @@ val questionBank: List<Question> = listOf(
         correctAnswer = "476",
         acceptedAnswers = listOf("476 ad", "ad 476"),
         difficulty = Difficulty.HARD
+    ),
+    // ── Geography (added 2026-11) ──
+    Question(
+        id = 91,
+        type = QuestionType.MULTIPLE_CHOICE,
+        category = Category.GEOGRAPHY,
+        questionText = "What is the capital of Canada?",
+        correctAnswer = "Ottawa",
+        options = listOf("Ottawa", "Toronto", "Montreal", "Vancouver"),
+        difficulty = Difficulty.MEDIUM
+    ),
+    Question(
+        id = 92,
+        type = QuestionType.MULTIPLE_CHOICE,
+        category = Category.GEOGRAPHY,
+        questionText = "Counting its overseas territories, which country spans the most time zones?",
+        correctAnswer = "France",
+        options = listOf("France", "Russia", "USA", "United Kingdom"),
+        difficulty = Difficulty.HARD
+    ),
+    Question(
+        id = 93,
+        type = QuestionType.MULTIPLE_CHOICE,
+        category = Category.GEOGRAPHY,
+        questionText = "Which river flows through Baghdad?",
+        correctAnswer = "Tigris",
+        options = listOf("Tigris", "Euphrates", "Jordan", "Nile"),
+        difficulty = Difficulty.MEDIUM
+    ),
+    Question(
+        id = 94,
+        type = QuestionType.MULTIPLE_CHOICE,
+        category = Category.GEOGRAPHY,
+        questionText = "What is the capital of Kazakhstan?",
+        correctAnswer = "Astana",
+        options = listOf("Astana", "Almaty", "Tashkent", "Bishkek"),
+        difficulty = Difficulty.HARD
+    ),
+    Question(
+        id = 95,
+        type = QuestionType.MULTIPLE_CHOICE,
+        category = Category.GEOGRAPHY,
+        questionText = "Which strait separates Europe from Africa at the western end of the Mediterranean?",
+        correctAnswer = "Strait of Gibraltar",
+        options = listOf("Strait of Gibraltar", "Bosporus", "Strait of Hormuz", "Strait of Messina"),
+        difficulty = Difficulty.MEDIUM
+    ),
+    Question(
+        id = 96,
+        type = QuestionType.MULTIPLE_CHOICE,
+        category = Category.GEOGRAPHY,
+        questionText = "What is the deepest lake in the world?",
+        correctAnswer = "Lake Baikal",
+        options = listOf("Lake Baikal", "Lake Tanganyika", "Caspian Sea", "Lake Superior"),
+        difficulty = Difficulty.HARD
+    ),
+    Question(
+        id = 97,
+        type = QuestionType.MULTIPLE_CHOICE,
+        category = Category.GEOGRAPHY,
+        questionText = "Which African country has the largest population?",
+        correctAnswer = "Nigeria",
+        options = listOf("Nigeria", "Ethiopia", "Egypt", "DR Congo"),
+        difficulty = Difficulty.MEDIUM
+    ),
+    Question(
+        id = 98,
+        type = QuestionType.MULTIPLE_CHOICE,
+        category = Category.GEOGRAPHY,
+        questionText = "Which country is completely surrounded by South Africa?",
+        correctAnswer = "Lesotho",
+        options = listOf("Lesotho", "Eswatini", "Botswana", "Namibia"),
+        difficulty = Difficulty.HARD
+    ),
+    Question(
+        id = 99,
+        type = QuestionType.TYPE_IN,
+        category = Category.GEOGRAPHY,
+        questionText = "What is the capital of Turkey?",
+        correctAnswer = "Ankara",
+        difficulty = Difficulty.MEDIUM
+    ),
+    Question(
+        id = 100,
+        type = QuestionType.TYPE_IN,
+        category = Category.GEOGRAPHY,
+        questionText = "What is the largest country in South America by area?",
+        correctAnswer = "Brazil",
+        acceptedAnswers = listOf("brasil"),
+        difficulty = Difficulty.EASY
+    ),
+    Question(
+        id = 101,
+        type = QuestionType.TYPE_IN,
+        category = Category.GEOGRAPHY,
+        questionText = "What is the longest mountain range on land?",
+        correctAnswer = "Andes",
+        acceptedAnswers = listOf("andes mountains"),
+        difficulty = Difficulty.HARD
+    ),
+    Question(
+        id = 102,
+        type = QuestionType.TYPE_IN,
+        category = Category.GEOGRAPHY,
+        questionText = "Which US state is made up entirely of islands?",
+        correctAnswer = "Hawaii",
+        difficulty = Difficulty.EASY
+    ),
+    Question(
+        id = 103,
+        type = QuestionType.TYPE_IN,
+        category = Category.GEOGRAPHY,
+        questionText = "What is the capital of New Zealand?",
+        correctAnswer = "Wellington",
+        difficulty = Difficulty.MEDIUM
+    ),
+    Question(
+        id = 104,
+        type = QuestionType.TYPE_IN,
+        category = Category.GEOGRAPHY,
+        questionText = "Which salt lake between Israel and Jordan has the lowest shoreline on land?",
+        correctAnswer = "Dead Sea",
+        difficulty = Difficulty.MEDIUM
+    ),
+    Question(
+        id = 105,
+        type = QuestionType.TYPE_IN,
+        category = Category.GEOGRAPHY,
+        questionText = "Which narrow strip of land connects North and South America?",
+        correctAnswer = "Isthmus of Panama",
+        acceptedAnswers = listOf("panama", "panama isthmus"),
+        difficulty = Difficulty.HARD
+    ),
+    Question(
+        id = 106,
+        type = QuestionType.TYPE_IN,
+        category = Category.GEOGRAPHY,
+        questionText = "Which country has the longest coastline in the world?",
+        correctAnswer = "Canada",
+        difficulty = Difficulty.HARD
+    ),
+    // ── Pop Culture (added 2026-11) ──
+    Question(
+        id = 107,
+        type = QuestionType.MULTIPLE_CHOICE,
+        category = Category.POP_CULTURE,
+        questionText = "Who composed the violin concertos known as The Four Seasons?",
+        correctAnswer = "Antonio Vivaldi",
+        options = listOf("Antonio Vivaldi", "Johann Sebastian Bach", "George Frideric Handel", "Wolfgang Amadeus Mozart"),
+        difficulty = Difficulty.MEDIUM
+    ),
+    Question(
+        id = 108,
+        type = QuestionType.MULTIPLE_CHOICE,
+        category = Category.POP_CULTURE,
+        questionText = "In what year was the first Star Wars film released?",
+        correctAnswer = "1977",
+        options = listOf("1977", "1975", "1979", "1980"),
+        difficulty = Difficulty.MEDIUM
+    ),
+    Question(
+        id = 109,
+        type = QuestionType.MULTIPLE_CHOICE,
+        category = Category.POP_CULTURE,
+        questionText = "Who painted 'The Persistence of Memory', with its melting clocks?",
+        correctAnswer = "Salvador Dalí",
+        options = listOf("Salvador Dalí", "René Magritte", "Max Ernst", "Joan Miró"),
+        difficulty = Difficulty.MEDIUM
+    ),
+    Question(
+        id = 110,
+        type = QuestionType.MULTIPLE_CHOICE,
+        category = Category.POP_CULTURE,
+        questionText = "Which novel begins with the line 'Call me Ishmael'?",
+        correctAnswer = "Moby-Dick",
+        options = listOf("Moby-Dick", "Treasure Island", "The Old Man and the Sea", "Robinson Crusoe"),
+        difficulty = Difficulty.MEDIUM
+    ),
+    Question(
+        id = 111,
+        type = QuestionType.MULTIPLE_CHOICE,
+        category = Category.POP_CULTURE,
+        questionText = "On which Queen album did 'Bohemian Rhapsody' first appear?",
+        correctAnswer = "A Night at the Opera",
+        options = listOf("A Night at the Opera", "News of the World", "Sheer Heart Attack", "A Day at the Races"),
+        difficulty = Difficulty.HARD
+    ),
+    Question(
+        id = 112,
+        type = QuestionType.MULTIPLE_CHOICE,
+        category = Category.POP_CULTURE,
+        questionText = "In chess, which piece can only move diagonally?",
+        correctAnswer = "Bishop",
+        options = listOf("Bishop", "Rook", "Knight", "Queen"),
+        difficulty = Difficulty.EASY
+    ),
+    Question(
+        id = 113,
+        type = QuestionType.MULTIPLE_CHOICE,
+        category = Category.POP_CULTURE,
+        questionText = "Who wrote the novel 'One Hundred Years of Solitude'?",
+        correctAnswer = "Gabriel García Márquez",
+        options = listOf("Gabriel García Márquez", "Jorge Luis Borges", "Isabel Allende", "Mario Vargas Llosa"),
+        difficulty = Difficulty.HARD
+    ),
+    Question(
+        id = 114,
+        type = QuestionType.MULTIPLE_CHOICE,
+        category = Category.POP_CULTURE,
+        questionText = "What was Walt Disney's first feature-length animated film?",
+        correctAnswer = "Snow White and the Seven Dwarfs",
+        options = listOf("Snow White and the Seven Dwarfs", "Pinocchio", "Fantasia", "Bambi"),
+        difficulty = Difficulty.MEDIUM
+    ),
+    Question(
+        id = 115,
+        type = QuestionType.TYPE_IN,
+        category = Category.POP_CULTURE,
+        questionText = "What is the name of Black Panther's fictional African homeland?",
+        correctAnswer = "Wakanda",
+        difficulty = Difficulty.MEDIUM
+    ),
+    Question(
+        id = 116,
+        type = QuestionType.TYPE_IN,
+        category = Category.POP_CULTURE,
+        questionText = "Who wrote the play 'Romeo and Juliet'?",
+        correctAnswer = "William Shakespeare",
+        acceptedAnswers = listOf("shakespeare"),
+        difficulty = Difficulty.EASY
+    ),
+    Question(
+        id = 117,
+        type = QuestionType.TYPE_IN,
+        category = Category.POP_CULTURE,
+        questionText = "Which hobbit did Elijah Wood play in The Lord of the Rings films?",
+        correctAnswer = "Frodo",
+        acceptedAnswers = listOf("frodo baggins"),
+        difficulty = Difficulty.EASY
+    ),
+    Question(
+        id = 118,
+        type = QuestionType.TYPE_IN,
+        category = Category.POP_CULTURE,
+        questionText = "Which composer wrote the 'Moonlight' Sonata?",
+        correctAnswer = "Ludwig van Beethoven",
+        acceptedAnswers = listOf("beethoven", "van beethoven"),
+        difficulty = Difficulty.MEDIUM
+    ),
+    Question(
+        id = 119,
+        type = QuestionType.TYPE_IN,
+        category = Category.POP_CULTURE,
+        questionText = "How many squares are on a chessboard?",
+        correctAnswer = "64",
+        acceptedAnswers = listOf("sixty four"),
+        difficulty = Difficulty.EASY
+    ),
+    Question(
+        id = 120,
+        type = QuestionType.TYPE_IN,
+        category = Category.POP_CULTURE,
+        questionText = "What is the name of Captain Ahab's ship in Moby-Dick?",
+        correctAnswer = "Pequod",
+        difficulty = Difficulty.HARD
+    ),
+    Question(
+        id = 121,
+        type = QuestionType.TYPE_IN,
+        category = Category.POP_CULTURE,
+        questionText = "In Greek mythology, who is the king of the gods?",
+        correctAnswer = "Zeus",
+        difficulty = Difficulty.EASY
+    ),
+    Question(
+        id = 122,
+        type = QuestionType.TYPE_IN,
+        category = Category.POP_CULTURE,
+        questionText = "Which Dutch painter cut off part of his own ear in 1888?",
+        correctAnswer = "Vincent van Gogh",
+        acceptedAnswers = listOf("van gogh"),
+        difficulty = Difficulty.MEDIUM
+    ),
+    // ── Tech (added 2026-11) ──
+    Question(
+        id = 123,
+        type = QuestionType.MULTIPLE_CHOICE,
+        category = Category.TECH,
+        questionText = "What does 'HTTP' stand for?",
+        correctAnswer = "HyperText Transfer Protocol",
+        options = listOf("HyperText Transfer Protocol", "HyperText Transmission Protocol", "High Transfer Text Protocol", "Hyperlink Transfer Protocol"),
+        difficulty = Difficulty.MEDIUM
+    ),
+    Question(
+        id = 124,
+        type = QuestionType.MULTIPLE_CHOICE,
+        category = Category.TECH,
+        questionText = "Who co-founded Apple with Steve Jobs and Ronald Wayne?",
+        correctAnswer = "Steve Wozniak",
+        options = listOf("Steve Wozniak", "Bill Gates", "Paul Allen", "Larry Page"),
+        difficulty = Difficulty.MEDIUM
+    ),
+    Question(
+        id = 125,
+        type = QuestionType.MULTIPLE_CHOICE,
+        category = Category.TECH,
+        questionText = "Which company created the JavaScript language?",
+        correctAnswer = "Netscape",
+        options = listOf("Netscape", "Microsoft", "Sun Microsystems", "Oracle"),
+        difficulty = Difficulty.HARD
+    ),
+    Question(
+        id = 126,
+        type = QuestionType.MULTIPLE_CHOICE,
+        category = Category.TECH,
+        questionText = "In what year did the first iPhone go on sale?",
+        correctAnswer = "2007",
+        options = listOf("2007", "2005", "2008", "2010"),
+        difficulty = Difficulty.MEDIUM
+    ),
+    Question(
+        id = 127,
+        type = QuestionType.MULTIPLE_CHOICE,
+        category = Category.TECH,
+        questionText = "Who is often called the first computer programmer, for her notes on Babbage's Analytical Engine?",
+        correctAnswer = "Ada Lovelace",
+        options = listOf("Ada Lovelace", "Grace Hopper", "Hedy Lamarr", "Margaret Hamilton"),
+        difficulty = Difficulty.MEDIUM
+    ),
+    Question(
+        id = 128,
+        type = QuestionType.MULTIPLE_CHOICE,
+        category = Category.TECH,
+        questionText = "What does 'SQL' stand for?",
+        correctAnswer = "Structured Query Language",
+        options = listOf("Structured Query Language", "Simple Query Language", "Standard Question Language", "Sequential Query Logic"),
+        difficulty = Difficulty.MEDIUM
+    ),
+    Question(
+        id = 129,
+        type = QuestionType.MULTIPLE_CHOICE,
+        category = Category.TECH,
+        questionText = "Which port does HTTPS use by default?",
+        correctAnswer = "443",
+        options = listOf("443", "80", "22", "8080"),
+        difficulty = Difficulty.HARD
+    ),
+    Question(
+        id = 130,
+        type = QuestionType.MULTIPLE_CHOICE,
+        category = Category.TECH,
+        questionText = "Which British mathematician proposed the 'imitation game' test of machine intelligence?",
+        correctAnswer = "Alan Turing",
+        options = listOf("Alan Turing", "Charles Babbage", "John von Neumann", "Claude Shannon"),
+        difficulty = Difficulty.MEDIUM
+    ),
+    Question(
+        id = 131,
+        type = QuestionType.TYPE_IN,
+        category = Category.TECH,
+        questionText = "What does 'GPU' stand for?",
+        correctAnswer = "Graphics Processing Unit",
+        difficulty = Difficulty.MEDIUM
+    ),
+    Question(
+        id = 132,
+        type = QuestionType.TYPE_IN,
+        category = Category.TECH,
+        questionText = "What does 'PDF' stand for?",
+        correctAnswer = "Portable Document Format",
+        difficulty = Difficulty.MEDIUM
+    ),
+    Question(
+        id = 133,
+        type = QuestionType.TYPE_IN,
+        category = Category.TECH,
+        questionText = "What is the binary number 1010 in decimal?",
+        correctAnswer = "10",
+        acceptedAnswers = listOf("ten"),
+        difficulty = Difficulty.MEDIUM
+    ),
+    Question(
+        id = 134,
+        type = QuestionType.TYPE_IN,
+        category = Category.TECH,
+        questionText = "Which company makes the Windows operating system?",
+        correctAnswer = "Microsoft",
+        difficulty = Difficulty.EASY
+    ),
+    Question(
+        id = 135,
+        type = QuestionType.TYPE_IN,
+        category = Category.TECH,
+        questionText = "Who created the Linux kernel?",
+        correctAnswer = "Linus Torvalds",
+        acceptedAnswers = listOf("torvalds"),
+        difficulty = Difficulty.MEDIUM
+    ),
+    Question(
+        id = 136,
+        type = QuestionType.TYPE_IN,
+        category = Category.TECH,
+        questionText = "What does 'LAN' stand for?",
+        correctAnswer = "Local Area Network",
+        difficulty = Difficulty.EASY
+    ),
+    Question(
+        id = 137,
+        type = QuestionType.TYPE_IN,
+        category = Category.TECH,
+        questionText = "How many bits are in an IPv4 address?",
+        correctAnswer = "32",
+        acceptedAnswers = listOf("thirty two"),
+        difficulty = Difficulty.HARD
+    ),
+    Question(
+        id = 138,
+        type = QuestionType.TYPE_IN,
+        category = Category.TECH,
+        questionText = "Which Sun Microsystems language promised 'write once, run anywhere'?",
+        correctAnswer = "Java",
+        difficulty = Difficulty.MEDIUM
     )
 )
