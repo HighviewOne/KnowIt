@@ -5,14 +5,11 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
-import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.first
-
-private val Context.dataStore by preferencesDataStore(name = "knowit_prefs")
 
 class HighScoreRepository(private val dataStore: DataStore<Preferences>) {
     // Held by a ViewModel that outlives the Activity, so never keep an Activity context.
-    constructor(context: Context) : this(context.applicationContext.dataStore)
+    constructor(context: Context) : this(context.knowItPrefs)
 
     companion object {
         private val HIGH_SCORE_KEY = intPreferencesKey("high_score")

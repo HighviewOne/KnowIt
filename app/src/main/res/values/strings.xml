@@ -22,6 +22,15 @@
     <string name="home_play_description">Play game</string>
     <string name="home_rules">%1$d questions • %2$d categories\n+%3$d pts per correct • streak bonuses!</string>
 
+    <string name="home_daily_title">📅 Daily Challenge #%1$d</string>
+    <string name="home_daily_new">10 questions, easy to hard. One try a day.</string>
+    <string name="home_daily_in_progress">In progress: %1$d / %2$d answered</string>
+    <string name="home_daily_done">Done for today: %1$d pts. New challenge at midnight.</string>
+    <string name="home_daily_streak">🔥 %1$d-day streak</string>
+    <string name="home_daily_play">Play today\'s challenge</string>
+    <string name="home_daily_continue">Continue</string>
+    <string name="home_daily_see_result">See result</string>
+
     <!-- Game -->
     <string name="game_progress">Q%1$d / %2$d</string>
     <string name="game_streak_badge">" ×%1$d"</string>
@@ -33,6 +42,13 @@
     <string name="game_points_awarded_streak">+%1$d pts! 🔥</string>
     <string name="game_streak">Streak ×%1$d</string>
     <string name="game_wrong">Wrong!</string>
+    <string name="game_close">So close! +%1$d pts</string>
+    <string name="game_fifty_fifty">✂️ 50/50</string>
+    <string name="game_fifty_fifty_description">Use 50/50: remove two wrong answers. Once per daily challenge.</string>
+    <string name="game_daily_label">Daily #%1$d</string>
+    <string name="difficulty_easy">Easy</string>
+    <string name="difficulty_medium">Medium</string>
+    <string name="difficulty_hard">Hard</string>
     <string name="game_correct_answer">Answer: %1$s</string>
     <string name="game_next">Next ›</string>
     <string name="game_option_correct">Correct answer</string>
@@ -56,4 +72,12 @@
     <string name="result_message_low">Keep studying, you\'ll get there! 🔥</string>
     <string name="result_play_again">Play Again\u0020\u0020▶</string>
     <string name="result_play_again_description">Play another game</string>
+    <string name="result_daily_title">Daily #%1$d</string>
+    <string name="result_daily_streak">Daily streak</string>
+    <string name="result_daily_streak_value">🔥 %1$d (best %2$d)</string>
+    <string name="result_daily_next">New challenge at midnight</string>
+    <string name="result_share">Share result</string>
+    <string name="result_share_chooser">Share your result</string>
+    <string name="result_share_text">KnowIt Daily #%1$d · %2$d/%3$d pts\n%4$s\nhttps://highviewone.github.io/KnowIt/</string>
+    <string name="result_home">Back to home</string>
 </resources>

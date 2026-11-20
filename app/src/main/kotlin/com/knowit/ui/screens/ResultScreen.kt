@@ -10,6 +10,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Brush
@@ -21,8 +22,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.knowit.R
+import android.content.Intent
+import com.knowit.model.DailyChallenge
 import com.knowit.model.Scoring
 import com.knowit.ui.theme.*
+import com.knowit.viewmodel.GameMode
 import com.knowit.viewmodel.GameState
 
 private fun letterGrade(score: Int, maxScore: Int): String {
@@ -52,8 +56,11 @@ private fun gradeColor(grade: String): Color = when {
 @Composable
 fun ResultScreen(
     state: GameState,
-    onPlayAgain: () -> Unit
+    onPlayAgain: () -> Unit,
+    onHome: () -> Unit
 ) {
+    val isDaily = state.mode == GameMode.DAILY
+    val context = LocalContext.current
     val maxScore = Scoring.maxScore(state.questions.size).coerceAtLeast(1)
     val grade = letterGrade(state.score, maxScore)
     val accuracy = if (state.questions.isNotEmpty()) {
@@ -115,7 +122,8 @@ fun ResultScreen(
             Spacer(modifier = Modifier.height(16.dp))
 
             Text(
-                text = stringResource(R.string.result_title),
+                text = if (isDaily) stringResource(R.string.result_daily_title, state.dailyNumber)
+                else stringResource(R.string.result_title),
                 style = MaterialTheme.typography.headlineLarge,
                 fontWeight = FontWeight.ExtraBold,
                 color = Color.White
@@ -143,6 +151,15 @@ fun ResultScreen(
                     fontSize = 52.sp,
                     fontWeight = FontWeight.ExtraBold,
                     color = gradeColor(grade)
+                )
+            }
+
+            if (isDaily) {
+                Text(
+                    text = DailyChallenge.grid(state.outcomes),
+                    fontSize = 22.sp,
+                    letterSpacing = 2.sp,
+                    textAlign = TextAlign.Center
                 )
             }
 
@@ -242,8 +259,33 @@ fun ResultScreen(
                         )
                     }
 
-                    // Best score
-                    if (state.highScore > 0) {
+                    // Daily streak
+                    if (isDaily) {
+                        HorizontalDivider(color = Color.White.copy(alpha = 0.1f))
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Text(
+                                text = stringResource(R.string.result_daily_streak),
+                                style = MaterialTheme.typography.bodyLarge,
+                                color = StreakGold.copy(alpha = 0.8f)
+                            )
+                            Text(
+                                text = stringResource(
+                                    R.string.result_daily_streak_value,
+                                    state.daily.streak,
+                                    state.daily.bestStreak
+                                ),
+                                style = MaterialTheme.typography.titleMedium,
+                                fontWeight = FontWeight.Bold,
+                                color = StreakGold
+                            )
+                        }
+                    }
+
+                    // Best score (classic games only)
+                    if (!isDaily && state.highScore > 0) {
                         HorizontalDivider(color = Color.White.copy(alpha = 0.1f))
                         Row(
                             modifier = Modifier.fillMaxWidth(),
@@ -281,8 +323,57 @@ fun ResultScreen(
                 textAlign = TextAlign.Center
             )
 
-            // Play Again button
-            Button(
+            if (isDaily) {
+                val shareText = stringResource(
+                    R.string.result_share_text,
+                    state.dailyNumber,
+                    state.score,
+                    Scoring.maxScore(state.questions.size),
+                    DailyChallenge.grid(state.outcomes)
+                )
+                val chooserTitle = stringResource(R.string.result_share_chooser)
+                Button(
+                    onClick = {
+                        val send = Intent(Intent.ACTION_SEND).apply {
+                            type = "text/plain"
+                            putExtra(Intent.EXTRA_TEXT, shareText)
+                        }
+                        context.startActivity(Intent.createChooser(send, chooserTitle))
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(60.dp),
+                    shape = RoundedCornerShape(20.dp),
+                    colors = ButtonDefaults.buttonColors(containerColor = KnowItPrimary),
+                    elevation = ButtonDefaults.buttonElevation(defaultElevation = 8.dp)
+                ) {
+                    Text(
+                        text = stringResource(R.string.result_share),
+                        style = MaterialTheme.typography.titleLarge,
+                        fontWeight = FontWeight.ExtraBold,
+                        color = Color.White
+                    )
+                }
+                Text(
+                    text = stringResource(R.string.result_daily_next),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = Color.White.copy(alpha = 0.5f)
+                )
+                OutlinedButton(
+                    onClick = onHome,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(52.dp),
+                    shape = RoundedCornerShape(20.dp)
+                ) {
+                    Text(
+                        text = stringResource(R.string.result_home),
+                        style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.White
+                    )
+                }
+            } else Button(
                 onClick = onPlayAgain,
                 modifier = Modifier
                     .fillMaxWidth()
