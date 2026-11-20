@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.compose.LifecycleResumeEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.knowit.ui.screens.GameScreen
@@ -36,6 +37,12 @@ class MainActivity : ComponentActivity() {
                     val viewModel: GameViewModel = viewModel(factory = factory)
                     val state by viewModel.state.collectAsStateWithLifecycle()
 
+                    // The day may have turned over while the app was in the background.
+                    LifecycleResumeEffect(viewModel) {
+                        viewModel.refreshDaily()
+                        onPauseOrDispose { }
+                    }
+
                     BackHandler(enabled = state.phase != GamePhase.HOME) {
                         viewModel.goHome()
                     }
@@ -43,18 +50,22 @@ class MainActivity : ComponentActivity() {
                     when (state.phase) {
                         GamePhase.HOME -> HomeScreen(
                             highScore = state.highScore,
-                            onPlay = { viewModel.startGame() }
+                            daily = state.daily,
+                            onPlay = { viewModel.startGame() },
+                            onPlayDaily = { viewModel.startDaily() }
                         )
                         GamePhase.PLAYING -> GameScreen(
                             state = state,
                             onMultipleChoiceAnswer = { viewModel.submitMultipleChoiceAnswer(it) },
                             onTypeInTextChange = { viewModel.updateTypeInText(it) },
                             onTypeInSubmit = { viewModel.submitTypeInAnswer() },
+                            onFiftyFifty = { viewModel.useFiftyFifty() },
                             onNext = { viewModel.advanceToNextQuestion() }
                         )
                         GamePhase.GAME_OVER -> ResultScreen(
                             state = state,
-                            onPlayAgain = { viewModel.startGame() }
+                            onPlayAgain = { viewModel.startGame() },
+                            onHome = { viewModel.goHome() }
                         )
                     }
                 }

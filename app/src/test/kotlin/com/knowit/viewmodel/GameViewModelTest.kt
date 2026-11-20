@@ -1,5 +1,7 @@
 package com.knowit.viewmodel
 
+import com.knowit.data.DailyRepository
+import com.knowit.data.DailySave
 import com.knowit.data.HighScoreRepository
 import com.knowit.data.questionBank
 import com.knowit.model.Category
@@ -27,6 +29,7 @@ class GameViewModelTest {
 
     private val testDispatcher = UnconfinedTestDispatcher()
     private lateinit var repo: HighScoreRepository
+    private lateinit var dailyRepo: DailyRepository
     private lateinit var vm: GameViewModel
 
     @Before
@@ -34,7 +37,9 @@ class GameViewModelTest {
         Dispatchers.setMain(testDispatcher)
         repo = mockk(relaxed = true)
         coEvery { repo.getHighScore() } returns 0
-        vm = GameViewModel(repo)
+        dailyRepo = mockk(relaxed = true)
+        coEvery { dailyRepo.load() } returns DailySave()
+        vm = GameViewModel(repo, dailyRepo)
     }
 
     @After
@@ -223,9 +228,9 @@ class GameViewModelTest {
 
     @Test
     fun `question order differs between seeds`() {
-        val orderA = GameViewModel(repo, random = Random(1))
+        val orderA = GameViewModel(repo, dailyRepo, random = Random(1))
             .apply { startGame() }.state.value.questions.map { it.id }
-        val orderB = GameViewModel(repo, random = Random(2))
+        val orderB = GameViewModel(repo, dailyRepo, random = Random(2))
             .apply { startGame() }.state.value.questions.map { it.id }
 
         assertTrue(orderA != orderB)
@@ -233,7 +238,7 @@ class GameViewModelTest {
 
     @Test
     fun `consecutive games draw different question sets`() {
-        val seeded = GameViewModel(repo, random = Random(42))
+        val seeded = GameViewModel(repo, dailyRepo, random = Random(42))
         seeded.startGame()
         val first = seeded.state.value.questions.map { it.id }.toSet()
         seeded.startGame()
@@ -262,7 +267,7 @@ class GameViewModelTest {
     @Test
     fun `beating the previous best flags a new high score`() = runTest {
         coEvery { repo.getHighScore() } returns 100
-        vm = GameViewModel(repo)
+        vm = GameViewModel(repo, dailyRepo)
         vm.startGame()
         answerAllCorrectly()
 
@@ -273,7 +278,7 @@ class GameViewModelTest {
     @Test
     fun `tying the previous best is not a new high score`() = runTest {
         coEvery { repo.getHighScore() } returns 295
-        vm = GameViewModel(repo)
+        vm = GameViewModel(repo, dailyRepo)
         vm.startGame()
         answerAllCorrectly()
 
@@ -283,7 +288,7 @@ class GameViewModelTest {
     @Test
     fun `scoring below the previous best keeps it`() = runTest {
         coEvery { repo.getHighScore() } returns 295
-        vm = GameViewModel(repo)
+        vm = GameViewModel(repo, dailyRepo)
         vm.startGame()
         repeat(vm.state.value.questions.size) {
             answerCurrent(correct = false)
@@ -344,7 +349,7 @@ class GameViewModelTest {
                 acceptedAnswers = listOf("rdj")
             )
         )
-        vm = GameViewModel(repo, questionSource = fixture)
+        vm = GameViewModel(repo, dailyRepo, questionSource = fixture)
         vm.startGame()
     }
 }

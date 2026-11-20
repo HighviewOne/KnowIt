@@ -22,6 +22,7 @@ import androidx.compose.ui.graphics.drawscope.rotate
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.LiveRegionMode
+import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.liveRegion
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.stateDescription
@@ -31,9 +32,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.knowit.R
+import com.knowit.model.Difficulty
 import com.knowit.model.QuestionType
 import com.knowit.ui.theme.*
 import com.knowit.viewmodel.AnswerStatus
+import com.knowit.viewmodel.GameMode
 import com.knowit.viewmodel.GameState
 import kotlin.random.Random
 
@@ -54,8 +57,10 @@ fun GameScreen(
     onMultipleChoiceAnswer: (String) -> Unit,
     onTypeInTextChange: (String) -> Unit,
     onTypeInSubmit: () -> Unit,
+    onFiftyFifty: () -> Unit,
     onNext: () -> Unit
 ) {
+    val isDaily = state.mode == GameMode.DAILY
     val currentQuestion = state.questions.getOrNull(state.currentQuestionIndex) ?: return
     val questionNumber = state.currentQuestionIndex + 1
     val totalQuestions = state.questions.size
@@ -196,6 +201,7 @@ fun GameScreen(
             // Category pill + progress bar
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 Row(
+                    modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(6.dp)
                 ) {
@@ -209,6 +215,26 @@ fun GameScreen(
                         color = categoryColor,
                         fontWeight = FontWeight.SemiBold
                     )
+                    if (isDaily) {
+                        Text(
+                            text = "· " + stringResource(
+                                when (currentQuestion.difficulty) {
+                                    Difficulty.EASY -> R.string.difficulty_easy
+                                    Difficulty.MEDIUM -> R.string.difficulty_medium
+                                    Difficulty.HARD -> R.string.difficulty_hard
+                                }
+                            ),
+                            style = MaterialTheme.typography.labelLarge,
+                            color = Color.White.copy(alpha = 0.6f)
+                        )
+                        Spacer(modifier = Modifier.weight(1f))
+                        Text(
+                            text = stringResource(R.string.game_daily_label, state.dailyNumber),
+                            style = MaterialTheme.typography.labelLarge,
+                            color = KnowItSecondary,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
                 }
 
                 // Progress bar
@@ -305,8 +331,27 @@ fun GameScreen(
                         correctAnswer = currentQuestion.correctAnswer,
                         selectedOption = state.selectedOption,
                         answerStatus = state.answerStatus,
+                        hiddenOptions = state.hiddenOptions,
                         onOptionSelected = onMultipleChoiceAnswer
                     )
+                    if (isDaily && state.fiftyFiftyAvailable && state.answerStatus == AnswerStatus.NONE) {
+                        val fiftyDescription = stringResource(R.string.game_fifty_fifty_description)
+                        OutlinedButton(
+                            onClick = onFiftyFifty,
+                            modifier = Modifier
+                                .align(Alignment.CenterHorizontally)
+                                .semantics { contentDescription = fiftyDescription },
+                            shape = RoundedCornerShape(12.dp),
+                            border = androidx.compose.foundation.BorderStroke(1.dp, StreakGold)
+                        ) {
+                            Text(
+                                text = stringResource(R.string.game_fifty_fifty),
+                                style = MaterialTheme.typography.labelLarge,
+                                fontWeight = FontWeight.Bold,
+                                color = StreakGold
+                            )
+                        }
+                    }
                 }
                 QuestionType.TYPE_IN -> {
                     TypeInSection(
@@ -371,6 +416,7 @@ private fun MultipleChoiceSection(
     correctAnswer: String,
     selectedOption: String?,
     answerStatus: AnswerStatus,
+    hiddenOptions: Set<String>,
     onOptionSelected: (String) -> Unit
 ) {
     val revealed = answerStatus != AnswerStatus.NONE
@@ -388,9 +434,11 @@ private fun MultipleChoiceSection(
                 rowOptions.forEach { option ->
                     val isCorrect = option == correctAnswer
                     val isSelected = option == selectedOption
+                    val isHidden = option in hiddenOptions && !(revealed && isCorrect)
 
                     val containerColor by animateColorAsState(
                         targetValue = when {
+                            isHidden -> KnowItCard.copy(alpha = 0.3f)
                             !revealed -> KnowItCard
                             isCorrect -> CorrectGreen.copy(alpha = 0.25f)
                             isSelected && !isCorrect -> WrongRed.copy(alpha = 0.25f)
@@ -401,6 +449,7 @@ private fun MultipleChoiceSection(
                     )
                     val borderColor by animateColorAsState(
                         targetValue = when {
+                            isHidden -> Color.White.copy(alpha = 0.05f)
                             !revealed -> Color.White.copy(alpha = 0.15f)
                             isCorrect -> CorrectGreen
                             isSelected && !isCorrect -> WrongRed
@@ -411,6 +460,7 @@ private fun MultipleChoiceSection(
                     )
                     val textColor by animateColorAsState(
                         targetValue = when {
+                            isHidden -> Color.White.copy(alpha = 0.15f)
                             !revealed -> Color.White
                             isCorrect -> CorrectGreenLight
                             isSelected && !isCorrect -> WrongRedLight
@@ -421,7 +471,7 @@ private fun MultipleChoiceSection(
                     )
 
                     Button(
-                        onClick = { if (!revealed) onOptionSelected(option) },
+                        onClick = { if (!revealed && !isHidden) onOptionSelected(option) },
                         modifier = Modifier
                             .weight(1f)
                             .height(72.dp)
@@ -434,7 +484,7 @@ private fun MultipleChoiceSection(
                             containerColor = containerColor,
                             disabledContainerColor = containerColor
                         ),
-                        enabled = !revealed,
+                        enabled = !revealed && !isHidden,
                         border = androidx.compose.foundation.BorderStroke(
                             width = if (revealed && (isCorrect || isSelected)) 2.dp else 1.dp,
                             color = borderColor
@@ -521,13 +571,15 @@ private fun FeedbackRow(
     onNext: () -> Unit
 ) {
     val isCorrect = answerStatus == AnswerStatus.CORRECT
+    val isClose = answerStatus == AnswerStatus.CLOSE
 
     Card(
         colors = CardDefaults.cardColors(
-            containerColor = if (isCorrect)
-                CorrectGreen.copy(alpha = 0.15f)
-            else
-                WrongRed.copy(alpha = 0.15f)
+            containerColor = when {
+                isCorrect -> CorrectGreen.copy(alpha = 0.15f)
+                isClose -> StreakGold.copy(alpha = 0.15f)
+                else -> WrongRed.copy(alpha = 0.15f)
+            }
         ),
         shape = RoundedCornerShape(16.dp),
         modifier = Modifier.semantics { liveRegion = LiveRegionMode.Polite }
@@ -559,9 +611,10 @@ private fun FeedbackRow(
                     }
                 } else {
                     Text(
-                        text = stringResource(R.string.game_wrong),
+                        text = if (isClose) stringResource(R.string.game_close, pointsAwarded)
+                        else stringResource(R.string.game_wrong),
                         style = MaterialTheme.typography.titleMedium,
-                        color = WrongRedLight,
+                        color = if (isClose) StreakGold else WrongRedLight,
                         fontWeight = FontWeight.ExtraBold
                     )
                     Text(
