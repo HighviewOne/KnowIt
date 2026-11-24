@@ -29,6 +29,7 @@
 - **20 questions per game**, drawn from a bank of 203 across 5 categories, tagged easy, medium or hard: 🔬 Science · 📜 History · 🌍 Geography · 🎬 Pop Culture · 💻 Tech
 - Alternating **Multiple Choice** and **Type-In** question formats, freshly drawn and shuffled every game
 - **Streak scoring** — rack up bonuses for consecutive correct answers
+- **Daily Challenge** — the same 10 questions for everyone each day, easy to hard, one try a day, with a daily streak, a one-time 50/50, and a shareable result grid. Works offline: the questions are picked from the date.
 - **Persistent high score** stored with Jetpack DataStore
 - Polished animations: confetti, card shake, green glow, animated score counter
 - Adaptive icon · accessibility labels · edge-to-edge layout · system Back returns to the home screen
@@ -43,11 +44,22 @@
 
 **Max possible score: 295 pts** (all 20 correct, full streak)
 
+### Daily Challenge
+
+Scored the same way, plus:
+
+| Event | Points |
+|---|---|
+| Type-in one typo away (answers of 6+ letters, no numbers, first letter right) | +5 · streak resets |
+| 50/50 (once per day, on a multiple-choice question) | removes two wrong answers, full points still available |
+
+**Max possible score: 145 pts** (all 10 correct, full streak). The daily score doesn't count toward the high score. Progress is saved after every answer, so leaving the app resumes the challenge where you left off. The day turns over at local midnight.
+
 ## Screens
 
 | Home | Game | Result |
 |---|---|---|
-| Animated title with pulse effect, high-score display, Play button | Live score counter, streak indicator, category progress bar, confetti on correct | Letter grade (A+→F), accuracy %, correct count, best-score tracker |
+| Animated title with pulse effect, high-score display, Play button, Daily Challenge card with streak | Live score counter, streak indicator, category progress bar, confetti on correct; difficulty and 50/50 in the daily | Letter grade (A+→F), accuracy %, correct count, best-score tracker; daily result grid and Share button |
 
 ## Tech Stack
 
@@ -91,7 +103,7 @@ Requires JDK 17 and the Android SDK (`ANDROID_HOME` or `local.properties`). The 
 ./gradlew testDebugUnitTest
 ```
 
-Unit tests cover the game flow (`GameViewModelTest`), scoring, type-in answer matching, high-score persistence, and question-bank integrity (unique questions, valid multiple-choice options, at least five of each format per category). CI runs them on every push and pull request.
+Unit tests cover the game flow (`GameViewModelTest`), the daily challenge (question picking, saved progress, streaks, 50/50), scoring, type-in answer matching, high-score persistence, and question-bank integrity (unique questions, valid multiple-choice options, at least five of each format per category). CI runs them on every push and pull request.
 
 ### Sideload from a release
 
@@ -109,11 +121,14 @@ app/src/main/
     ├── MainActivity.kt
     ├── model/
     │   ├── Question.kt                # Data models: Question, Category, QuestionType
-    │   ├── AnswerMatching.kt          # Forgiving type-in answer comparison
+    │   ├── AnswerMatching.kt          # Forgiving type-in matching, one-typo "close" answers
+    │   ├── DailyChallenge.kt          # Picks the day's questions from the date
     │   └── Scoring.kt                 # Points, streak bonus, max score
     ├── data/
     │   ├── QuestionBank.kt            # 203 trivia questions
-    │   └── HighScoreRepository.kt     # DataStore read/write
+    │   ├── HighScoreRepository.kt     # DataStore read/write
+    │   ├── DailyRepository.kt         # Daily progress and streak
+    │   └── Prefs.kt                   # Shared DataStore
     ├── viewmodel/
     │   ├── GameViewModel.kt           # Game state & flow (questions, answers, streaks)
     │   └── GameViewModelFactory.kt

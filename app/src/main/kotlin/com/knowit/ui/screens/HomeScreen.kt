@@ -23,13 +23,16 @@ import com.knowit.R
 import com.knowit.model.Category
 import com.knowit.model.Scoring
 import com.knowit.ui.theme.*
+import com.knowit.viewmodel.DailyStatus
 import com.knowit.viewmodel.GameViewModel
 import kotlinx.coroutines.delay
 
 @Composable
 fun HomeScreen(
     highScore: Int,
-    onPlay: () -> Unit
+    daily: DailyStatus,
+    onPlay: () -> Unit,
+    onPlayDaily: () -> Unit
 ) {
     // Title pulse animation
     val infiniteTransition = rememberInfiniteTransition(label = "titlePulse")
@@ -168,7 +171,9 @@ fun HomeScreen(
                 )
             }
 
-            Spacer(modifier = Modifier.height(16.dp))
+            DailyCard(daily = daily, onPlayDaily = onPlayDaily)
+
+            Spacer(modifier = Modifier.height(8.dp))
 
             // Subtitle info
             Text(
@@ -183,6 +188,67 @@ fun HomeScreen(
                 textAlign = TextAlign.Center,
                 lineHeight = 20.sp
             )
+        }
+    }
+}
+
+@Composable
+private fun DailyCard(daily: DailyStatus, onPlayDaily: () -> Unit) {
+    Card(
+        colors = CardDefaults.cardColors(containerColor = KnowItCard),
+        shape = RoundedCornerShape(20.dp),
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        Column(
+            modifier = Modifier.padding(20.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            Text(
+                text = stringResource(R.string.home_daily_title, daily.number),
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.ExtraBold,
+                color = KnowItSecondary
+            )
+            Text(
+                text = when {
+                    daily.isDone -> stringResource(R.string.home_daily_done, daily.score)
+                    daily.isInProgress -> stringResource(R.string.home_daily_in_progress, daily.answered, daily.total)
+                    else -> stringResource(R.string.home_daily_new)
+                },
+                style = MaterialTheme.typography.bodyMedium,
+                color = Color.White.copy(alpha = 0.7f),
+                textAlign = TextAlign.Center
+            )
+            if (daily.streak > 0) {
+                Text(
+                    text = stringResource(R.string.home_daily_streak, daily.streak),
+                    style = MaterialTheme.typography.labelLarge,
+                    fontWeight = FontWeight.Bold,
+                    color = StreakGold
+                )
+            }
+            OutlinedButton(
+                onClick = onPlayDaily,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(52.dp),
+                shape = RoundedCornerShape(16.dp),
+                border = androidx.compose.foundation.BorderStroke(2.dp, KnowItPrimary)
+            ) {
+                Text(
+                    text = stringResource(
+                        when {
+                            daily.isDone -> R.string.home_daily_see_result
+                            daily.isInProgress -> R.string.home_daily_continue
+                            else -> R.string.home_daily_play
+                        }
+                    ),
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.White
+                )
+            }
         }
     }
 }

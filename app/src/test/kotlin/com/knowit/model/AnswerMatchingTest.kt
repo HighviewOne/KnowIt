@@ -59,4 +59,34 @@ class AnswerMatchingTest {
             q.acceptedAnswers.forEach { assertTrue("${q.questionText} / $it", q.accepts(it)) }
         }
     }
+
+    @Test
+    fun `one typo in a long answer is a near miss`() {
+        val q = typeIn("Shakespeare", "william shakespeare")
+        assertTrue(q.isNearMiss("Shakespere"))       // dropped letter
+        assertTrue(q.isNearMiss("Shakesspeare"))     // extra letter
+        assertTrue(q.isNearMiss("Shakespaere"))      // swapped neighbours
+        assertTrue(q.isNearMiss("william shakespear"))
+        assertFalse(q.isNearMiss("Shakespeare"))     // exactly right is not "close"
+        assertFalse(q.isNearMiss("Shakspere"))       // two typos
+        assertFalse(q.isNearMiss(""))
+    }
+
+    @Test
+    fun `short answers, numbers and a different first letter are never near misses`() {
+        assertFalse(typeIn("Mars").isNearMiss("Mara"))
+        assertFalse(typeIn("1945").isNearMiss("1944"))
+        assertFalse(typeIn("300000").isNearMiss("300001"))
+        assertFalse(typeIn("Zambia").isNearMiss("Gambia"))
+        assertFalse(typeIn("Russia").isNearMiss("Prussia"))
+        assertTrue(typeIn("Zambia").isNearMiss("Zambai"))
+    }
+
+    @Test
+    fun `typo distance`() {
+        assertEquals(0, typoDistance("nile", "nile"))
+        assertEquals(1, typoDistance("nile", "nlie"))
+        assertEquals(1, typoDistance("nile", "nil"))
+        assertEquals(3, typoDistance("", "abc"))
+    }
 }
